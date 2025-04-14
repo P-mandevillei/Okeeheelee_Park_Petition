@@ -8,7 +8,7 @@ export default function Contribute() {
     const inputFiles = useRef();
 
     // latitude, longitude
-    const [pos, setPos] = useState([null, null]);
+    const [pos, setPos] = useState([0, 0]);
 
     function getGeolocation() {
         navigator.geolocation.getCurrentPosition(
