@@ -1,20 +1,64 @@
 body {
-  margin: 2em;
-  padding: 2em;
+  margin: auto;
 }
 
 .center {
   text-align: center;
+  margin: auto;
 }
 
 .warning {
   color: red;
 }
 
-.center {
-  margin: auto;
-}
-
 .greyify {
   color: rgba(128, 128, 128, 0.9);
+}
+
+.primaryColor {
+  background-color: #2E7D32 !important;
+  border: rgba(0,0,0,0) !important;
+  color: white !important;
+}
+
+.secondaryColor {
+  background-color: #FFC107 !important;
+  border: rgba(0,0,0,0) !important;
+  color: #1B5E20 !important; 
+}
+
+.secondaryColorHover:hover {
+  background-color: #FFB300 !important
+}
+
+.pad {
+  padding: 1.5em;
+}
+
+.selectablePrimary {
+  text-decoration: underline;
+  color: #1B5E20;
+}
+
+.selectablePrimary:hover {
+  cursor: pointer;
+  color: #A5D6A7;
+}
+
+.primaryHover:hover {
+  background-color: #A5D6A7 !important;
+}
+
+.toRight {
+  position: absolute;
+  right: 10%;
+}
+
+.toLeft {
+  position: absolute;
+  left: 10%;
+}
+
+.clearBorder {
+  border: rgba(0,0,0,0) !important;
 }

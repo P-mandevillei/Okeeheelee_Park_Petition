@@ -1,10 +1,14 @@
-import { useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import {Button, Card, Container, Form, Row, Col, ToastContainer, Toast} from "react-bootstrap"
 import { isValidEmail, isValidUSPhone, isValidZipCode } from "../auth/SubmissionValidations";
 import { googleRecaptchaClientKey, signPath } from "../../../../../paths/clientPaths";
 import ReCAPTCHA from "react-google-recaptcha";
+import PadBottomContext from "../contexts/PadBottomContext";
 
 export default function SignatureForm(props) {
+
+    const updatePadBottom = useContext(PadBottomContext);
+    useEffect(() => {updatePadBottom}, []);
 
     const firstName = useRef("");
     const [firstNameWarning, setFirstNameWarning] = useState("");
@@ -105,8 +109,9 @@ export default function SignatureForm(props) {
 
     }
 
-    return <Card border="light">
+    return <Card border="light" className="pad padBottom">
         <h1 className="center">Sign the petition!</h1>
+        <br />
         <Container>
         <Row>
         
@@ -162,6 +167,6 @@ export default function SignatureForm(props) {
         </div>
         <br />
         
-        <Button onClick={SubmitSignature}>Sign!</Button>
+        <Button className="center primaryColor primaryHover" style={{"width": "95%"}} onClick={SubmitSignature}>Sign!</Button>
     </Card>
 }
