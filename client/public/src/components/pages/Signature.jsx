@@ -13,7 +13,7 @@ export default function Signature(props) {
 
     const fireworkRef = useRef();
     useEffect(()=>{
-        const showTimeout = setTimeout(()=>{setShowFirework(false)}, 2000);
+        const showTimeout = setTimeout(()=>{setShowFirework(false)}, 3000);
         const timeout = setTimeout(()=>{
             fireworkRef.current?.updateOptions({
                 opacity: 0.5,
@@ -36,16 +36,20 @@ export default function Signature(props) {
 
     return <div className="pad" style={{'paddingBottom': `${padBottomPx}px`}}>
         {showForm? <SignatureForm setShowForm={setShowForm} {...props}/>
-        :<>
-            <Card style={{'border': "rgba(0,0,0,0)"}}>
-            <h1 className="pad center" style={{"display": "flex"}}>Thank You for Your Support!</h1>
+        :<div style={{'position':'relative', 'paddingBottom': `${padBottomPx}px`}}>
+            <Card style={{'border': "rgba(0,0,0,0)", 'position':'absolute', "top":"0", "zIndex":999, "background": "rgba(0,0,0,0)"}}>
+                <h1 className="pad center" style={{"display": "flex"}}>Thank You for Your Support!</h1>
                 <Button className="secondaryColor secondaryColorHover" onClick={()=>{setShowForm(true)}}>Submit Another</Button>
                 <Button className="primaryColor primaryHover" onClick={()=>{setExpandContact(true)}}>Contact Us</Button>
             </Card>
-            <Card style={{'border': "rgba(0,0,0,0)", "height": "300px", "overflow": "hidden"}}>
-                {showFirework? <Fireworks ref={fireworkRef} /> : <></>}
+            <Card style={{'border': "rgba(0,0,0,0)", 'position':'relative', "zIndex":1}}>
+                {showFirework? <Fireworks ref={fireworkRef} style={{
+                    width: '100%',
+                    height: '100%',
+                    background: "rgba(0,0,0,0)"
+                }}/> : <></>}
             </Card>
-        </>
+        </div>
         }
         
     </div>
