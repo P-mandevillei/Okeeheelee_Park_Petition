@@ -15,7 +15,7 @@ export default function CommonHomepage() {
         const navHeight = footer.offsetHeight;
         const padBottomNodes = document.getElementsByClassName('padBottom');
         for (let node of padBottomNodes) {
-        node.style.paddingBottom = `${navHeight+50}px`;
+            node.style.paddingBottom = `${navHeight+50}px`;
         }
     }
     

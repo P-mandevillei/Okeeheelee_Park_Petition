@@ -1,8 +1,17 @@
+import { useContext, useEffect } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import PadBottomContext from "../contexts/PadBottomContext";
 
 export default function PublicHomepage() {
     const nav = useNavigate();
+    const updatePadBottom = useContext(PadBottomContext);
+    useEffect(()=> {
+        const timeout = setTimeout(()=> {
+            updatePadBottom();
+        }, 0);
+        return clearTimeout(timeout);
+    }, []);
 
     return <div className="pad padBottom">
         <h1 className="center">Protect Okeeheelee Park!</h1>

@@ -8,7 +8,13 @@ import PadBottomContext from "../contexts/PadBottomContext";
 export default function SignatureForm(props) {
 
     const updatePadBottom = useContext(PadBottomContext);
-    useEffect(() => {updatePadBottom}, []);
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+          updatePadBottom(); // or any layout-dependent code
+        }, 0); // runs right after current frame
+        
+        return () => clearTimeout(timeout); // cleanup on unmount
+    }, []);
 
     const firstName = useRef("");
     const [firstNameWarning, setFirstNameWarning] = useState("");
