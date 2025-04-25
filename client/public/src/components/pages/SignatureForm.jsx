@@ -3,11 +3,9 @@ import {Button, Card, Container, Form, Row, Col, ToastContainer, Toast} from "re
 import { isValidEmail, isValidUSPhone, isValidZipCode } from "../auth/SubmissionValidations";
 import { googleRecaptchaClientKey, signPath } from "../../../../../paths/clientPaths";
 import ReCAPTCHA from "react-google-recaptcha";
-import PadBottomContext from "../contexts/PadBottomContext";
 import MessageBox from "./MessageBox";
 
 export default function SignatureForm(props) {
-    const padBottomPx = useContext(PadBottomContext);
 
     const firstName = useRef("");
     const [firstNameWarning, setFirstNameWarning] = useState("");
@@ -111,7 +109,7 @@ export default function SignatureForm(props) {
 
     }
 
-    return <Card border="light" className="pad" style={{"paddingBottom": `${padBottomPx}px`}}>
+    return <Card border="light" className="pad">
         <h1 className="center">Sign the petition!</h1>
         <br />
         <MessageBox header={msgHeader} body={msgBody} showMsg={showMsg} setShowMsg={setShowMsg}/>

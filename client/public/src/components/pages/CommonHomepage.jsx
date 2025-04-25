@@ -44,6 +44,7 @@ export default function CommonHomepage() {
         <Col xs={12}>
             <Nav className="me-auto">
                 <Nav.Link onClick={()=>{setexpandContact(old=>!old)}}>{expandContact? "Hide Contact Form":"Contact Us"}</Nav.Link>
+                <Nav.Link as={Link} to="/">Home</Nav.Link>
             </Nav>
         </Col>
         <Col xs={12}>
