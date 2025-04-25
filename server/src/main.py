@@ -5,20 +5,8 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import requests
 import validations
-from flask_jwt_extended import (
-    JWTManager, create_access_token, jwt_required,
-    set_access_cookies, get_jwt_identity, unset_jwt_cookies
-)
 from datetime import timedelta, datetime
-import pandas as pd
-import os
-from werkzeug.utils import secure_filename
-from bson.json_util import dumps
 from bson.objectid import ObjectId
-import matplotlib
-matplotlib.use('Agg') # referenced from ChatGPT: non-interactive plotting
-from matplotlib import pyplot as plt
-import shutil
 
 app = Flask(__name__)
 
@@ -66,6 +54,10 @@ def sign():
         data['zipCode']) or (len(data['phone'])>0 and not validations.is_valid_US_phone(
         data['phone'])):
         return {'error': True, 'msg': 'Invalid inputs!'}, 400
+    
+    duplicate = signatures.count_documents({'firstName': data['firstName'], 'lastName': data['lastName'], 'email': data['email']})
+    if duplicate != 0:
+        return {'error': True, 'msg': "You have submitted a duplicate signature."}, 400
 
     signature = {
         "time": datetime.now().timestamp(),
@@ -85,4 +77,8 @@ def sign():
         return {"error": True, "msg": "Sorry, your request cannot be processed by the database."}, 500
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=3456, debug=True)
+    app.run(
+        # host='0.0.0.0', 
+        port=5000, #3456, 
+        debug=True
+    )

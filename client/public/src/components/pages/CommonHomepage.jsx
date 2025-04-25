@@ -2,24 +2,19 @@ import { Link, Outlet } from "react-router-dom";
 import { Container, Navbar, Nav, Button, Row, Col, Form, Card } from "react-bootstrap";
 import { useId, useState, useEffect, useRef } from "react";
 import PadBottomContext from "../contexts/PadBottomContext";
+import ExpandContactContext from "../contexts/ExpandContactContext";
 
 export default function CommonHomepage() {
     const [expandContact, setexpandContact] = useState(false);
+    const [padBottomPx, setPadBottomPx] = useState(100);
     const emailId = useId();
     const titleId = useId();
     const bodyId = useId();
     const footerRef = useRef();
 
-    function updatePadBottom() {
-        const footer = footerRef.current;
-        const navHeight = footer.offsetHeight;
-        const padBottomNodes = document.getElementsByClassName('padBottom');
-        for (let node of padBottomNodes) {
-            node.style.paddingBottom = `${navHeight+50}px`;
-        }
-    }
-    
-    useEffect(updatePadBottom, [expandContact]);
+    useEffect(()=> {
+        setPadBottomPx(footerRef.current.offsetHeight + 50);
+    }, [expandContact]);
 
     return <>
     <Navbar sticky="top" expand="sm" className="primaryColor" data-bs-theme="dark">
@@ -36,9 +31,11 @@ export default function CommonHomepage() {
     </Container>
     </Navbar>
 
-    <PadBottomContext.Provider value={updatePadBottom}>
-        <Outlet />
+    <ExpandContactContext.Provider value={setexpandContact}>
+    <PadBottomContext.Provider value={padBottomPx}>
+        <Outlet/>
     </PadBottomContext.Provider>
+    </ExpandContactContext.Provider>
 
     <Navbar fixed="bottom" className="primaryColor" data-bs-theme="dark" ref={footerRef}>
     <Container>

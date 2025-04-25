@@ -3,17 +3,12 @@ import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import PadBottomContext from "../contexts/PadBottomContext";
 
-export default function PublicHomepage() {
-    const nav = useNavigate();
-    const updatePadBottom = useContext(PadBottomContext);
-    useEffect(()=> {
-        const timeout = setTimeout(()=> {
-            updatePadBottom();
-        }, 0);
-        return clearTimeout(timeout);
-    }, []);
+export default function PublicHomepage(props) {
+    const padBottomPx = useContext(PadBottomContext);
 
-    return <div className="pad padBottom">
+    const nav = useNavigate();
+
+    return <div className="pad" style={{"paddingBottom": `${padBottomPx}px`}}>
         <h1 className="center">Protect Okeeheelee Park!</h1>
         <br />
         <Card className="pad">

@@ -4,17 +4,10 @@ import { isValidEmail, isValidUSPhone, isValidZipCode } from "../auth/Submission
 import { googleRecaptchaClientKey, signPath } from "../../../../../paths/clientPaths";
 import ReCAPTCHA from "react-google-recaptcha";
 import PadBottomContext from "../contexts/PadBottomContext";
+import MessageBox from "./MessageBox";
 
 export default function SignatureForm(props) {
-
-    const updatePadBottom = useContext(PadBottomContext);
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-          updatePadBottom(); // or any layout-dependent code
-        }, 0); // runs right after current frame
-        
-        return () => clearTimeout(timeout); // cleanup on unmount
-    }, []);
+    const padBottomPx = useContext(PadBottomContext);
 
     const firstName = useRef("");
     const [firstNameWarning, setFirstNameWarning] = useState("");
@@ -52,6 +45,10 @@ export default function SignatureForm(props) {
         address1.current.value = "";
         address2.current.value = "";
     }
+
+    const [showMsg, setShowMsg] = useState(false);
+    const [msgHeader, setMsgHeader] = useState("");
+    const [msgBody, setMsgBody] = useState("");
 
     function SubmitSignature(e) {
         e?.preventDefault();
@@ -99,25 +96,26 @@ export default function SignatureForm(props) {
         }).then(res => {
             if (res.status === 200) {
                 resetFields();
-                // todo: decorate
-                alert("Submission success!");
-                return;
+                props.setShowForm(false);
             }
             return res.json();
         })
         .then(result => {
-            // todo
-            if (result?.msg){
-                alert(result.msg);
+            if (result.error === true) {
+                setMsgHeader("Submission Failed");
+                setMsgBody(result.msg);
+                setShowMsg(true);
             }
         })
         .catch(err => console.log(err));
 
     }
 
-    return <Card border="light" className="pad padBottom">
+    return <Card border="light" className="pad" style={{"paddingBottom": `${padBottomPx}px`}}>
         <h1 className="center">Sign the petition!</h1>
         <br />
+        <MessageBox header={msgHeader} body={msgBody} showMsg={showMsg} setShowMsg={setShowMsg}/>
+
         <Container>
         <Row>
         
