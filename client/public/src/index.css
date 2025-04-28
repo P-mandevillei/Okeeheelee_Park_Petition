@@ -11,6 +11,11 @@ body {
   color: red;
 }
 
+.notice {
+  color: rgb(186, 12, 47);
+  font-weight: bold;
+}
+
 .greyify {
   color: rgba(128, 128, 128, 0.9);
 }
@@ -45,6 +50,26 @@ body {
   color: #A5D6A7;
 }
 
+.selectablePrimaryFlipped {
+  text-decoration: underline;
+  color: #A5D6A7;
+}
+
+.selectablePrimaryFlipped:hover {
+  cursor: pointer;
+  color: #1B5E20;
+}
+
+.selectableSecondary {
+  text-decoration: underline;
+  color: #FFC107;
+}
+
+.selectableSecondary:hover {
+  cursor: pointer;
+  color: #FFB300;
+}
+
 .primaryHover:hover {
   background-color: #A5D6A7 !important;
 }
@@ -61,4 +86,19 @@ body {
 
 .clearBorder {
   border: rgba(0,0,0,0) !important;
+}
+
+.whiteBold {
+  color: white;
+  font-weight: bold;
+}
+
+.leftmost {
+  position: 'absolute';
+  left: 0;
+}
+
+.rightmost {
+  position: 'absolute';
+  right: 0;
 }

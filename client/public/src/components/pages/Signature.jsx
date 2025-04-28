@@ -36,9 +36,10 @@ export default function Signature(props) {
 
     return <div className="pad" style={{'paddingBottom': `${padBottomPx}px`}}>
         {showForm? <SignatureForm setShowForm={setShowForm} {...props}/>
-        :<div style={{'position':'relative', 'paddingBottom': `${padBottomPx}px`}}>
-            <Card style={{'border': "rgba(0,0,0,0)", 'position':'absolute', "top":"0", "zIndex":999, "background": "rgba(0,0,0,0)"}}>
+        :<div style={{'position':'relative', 'alignContent': 'center'}}>
+            <Card style={{'width': "100%", 'border': "rgba(0,0,0,0)", 'position':'absolute', "top":"0", "zIndex":999, "background": "rgba(0,0,0,0)"}}>
                 <h1 className="pad center" style={{"display": "flex"}}>Thank You for Your Support!</h1>
+                <p className="pad center notice" style={{"display": "flex", 'fontSize': '1em'}}>Your response is crucial to our cause</p>
                 <Button className="secondaryColor secondaryColorHover" onClick={()=>{setShowForm(true)}}>Submit Another</Button>
                 <Button className="primaryColor primaryHover" onClick={()=>{setExpandContact(true)}}>Contact Us</Button>
             </Card>

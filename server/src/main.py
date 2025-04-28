@@ -7,14 +7,35 @@ import requests
 import validations
 from datetime import timedelta, datetime
 from bson.objectid import ObjectId
+from flask_mail import Mail, Message
+import json
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
+app.config['MAIL_MAX_EMAILS'] = 1000
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'   # Gmail SMTP server
+app.config['MAIL_USERNAME'] = os.getenv('email_username')
+app.config['MAIL_PASSWORD'] = os.getenv('email_password')
+app.config['MAIL_DEFAULT_SENDER'] = ("Protect_Okeeheelee_Park", app.config['MAIL_USERNAME'])
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_PORT'] = 465 # use SSL
+
+app.config['MONGODB_URI'] = os.getenv("mongodb_uri")
+app.config['GOOGLE_RECAPTCHA_API'] = os.getenv("google_recaptcha_api")
+app.config['GOOGLE_RECAPTCHA_SERVERKEY'] = os.getenv("google_recaptcha_serverKey")
+app.config['EMAIL_RECIPIENT'] = os.getenv("email_recipient")
+
+mail = Mail(app)
 
 #cors = CORS(app, supports_credentials=True, origins=[paths.public_page_path])
 
 # connect with mongodb
 # https://cloud.mongodb.com
-client = MongoClient(paths.mongodb_uri, server_api=ServerApi('1'))
+client = MongoClient(app.config['MONGODB_URI'], server_api=ServerApi('1'))
 try:
     client.admin.command('ping')
     print("Pinged your deployment. You successfully connected to MongoDB!")
@@ -27,10 +48,10 @@ signatures = db.signatures
 def recaptcha_validate(token):
     # reCAPTCHA: https://developers.google.com/recaptcha/docs/verify
     body = {
-        'secret': paths.google_recaptcha_serverKey,
+        'secret': app.config['GOOGLE_RECAPTCHA_SERVERKEY'],
         'response': token
     }
-    res = requests.post(paths.google_recaptcha_api, data=body)
+    res = requests.post(app.config['GOOGLE_RECAPTCHA_API'], data=body)
     response = res.json()
     return response['success']
 
@@ -75,6 +96,27 @@ def sign():
     except Exception as e:
         print(e)
         return {"error": True, "msg": "Sorry, your request cannot be processed by the database."}, 500
+
+@app.route(paths.email_path, methods=['POST'])
+def send_email():
+    data = request.get_json()
+    if ('subject' not in data.keys() or len(data['subject'])==0 or 'msg' not in data.keys() or len(data['msg'])==0):
+        return {"error": True, "msg": "Missing Input Fields"}, 400
+    
+    msg = Message(
+        subject=data['subject'],
+        body=data['msg'],
+        recipients=[app.config['EMAIL_RECIPIENT']]
+    )
+    try:
+        mail.send(msg)
+    except Exception as e:
+        return {'error': True, 'msg': f"This is a message meant for admins: {str(e)}"}, 500
+    return {'error': False}, 200
+
+@app.route(paths.proposal_path, methods=['GET'])
+def send_proposal():
+    return send_file('./static/Proposal_for_a_Restoration_Project_at_Okeeheelee_Park_South.docx')
 
 if __name__ == "__main__":
     app.run(
