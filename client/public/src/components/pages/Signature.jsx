@@ -13,7 +13,7 @@ export default function Signature(props) {
 
     const fireworkRef = useRef();
     useEffect(()=>{
-        const showTimeout = setTimeout(()=>{setShowFirework(false)}, 3000);
+        const showTimeout = setTimeout(()=>{setShowFirework(false)}, 5000);
         const timeout = setTimeout(()=>{
             fireworkRef.current?.updateOptions({
                 opacity: 0.5,
@@ -36,21 +36,34 @@ export default function Signature(props) {
 
     return <div className="pad" style={{'paddingBottom': `${padBottomPx}px`}}>
         {showForm? <SignatureForm setShowForm={setShowForm} {...props}/>
-        :<div style={{'position':'relative', 'alignContent': 'center'}}>
-            <Card style={{'width': "100%", 'border': "rgba(0,0,0,0)", 'position':'absolute', "top":"0", "zIndex":999, "background": "rgba(0,0,0,0)"}}>
-                <h1 className="pad center" style={{"display": "flex"}}>Thank You for Your Support!</h1>
-                <p className="pad center notice" style={{"display": "flex", 'fontSize': '1em'}}>Your response is crucial to our cause</p>
-                <Button className="secondaryColor secondaryColorHover" onClick={()=>{setShowForm(true)}}>Submit Another</Button>
-                <Button className="primaryColor primaryHover" onClick={()=>{setExpandContact(true)}}>Contact Us</Button>
-            </Card>
-            <Card style={{'border': "rgba(0,0,0,0)", 'position':'relative', "zIndex":1}}>
+        :<Card 
+            style={{'border': "rgba(0,0,0,0)", 'position':'relative', 
+                    'width': '100%',
+                    'alignContent': 'center', 'aspectRatio': '2.2/1'}}
+        >
+            <Card style={{'border': "rgba(0,0,0,0)", 'position':'absolute', 
+                            "zIndex":1, 'width': '100%', 
+                            'aspectRatio': '2.2/1', 'overflow': 'hidden'}}
+            >
                 {showFirework? <Fireworks ref={fireworkRef} style={{
                     width: '100%',
                     height: '100%',
                     background: "rgba(0,0,0,0)"
                 }}/> : <></>}
             </Card>
-        </div>
+            
+            <Card 
+                style={{'width': "100%", 'height': '100%', 
+                        'border': "rgba(0,0,0,0)", 'position':'relative', 
+                        "top":"0", "zIndex":999, "background": "rgba(0,0,0,0)"}}
+            >
+                <h1 className="pad center" style={{"display": "flex"}}>Thank You for Your Support!</h1>
+                <p className="pad center notice" style={{"display": "flex", 'fontSize': '1em'}}>Your response is crucial to our cause</p>
+                <Button className="secondaryColor secondaryColorHover" onClick={()=>{setShowForm(true)}}>Submit Another</Button>
+                <Button className="primaryColor primaryHover" onClick={()=>{setExpandContact(true)}}>Contact Us</Button>
+            </Card>
+            
+        </Card>
         }
         
     </div>

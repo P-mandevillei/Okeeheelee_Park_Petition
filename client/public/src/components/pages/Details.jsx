@@ -18,7 +18,7 @@ export default function Details() {
 
     return <div className="pad" style={{'paddingBottom': `${padBottomPx}px`}}>
     <Card style={{border: "rgba(0,0,0,0)"}}>
-    <p className='pad center' style={{'fontSize': '1em', 'fontWeight': 'bold'}}>
+    <p className='pad' style={{'fontSize': '2.5vw', 'fontWeight': 'bold'}}>
         Okeeheelee Park South encompasses 960 acres of native south Florida ecological communities.<br/>
         However, current preparations envision its conversion into an RV park using ~$4.1 million from the park's budget. <br />
     </p>
@@ -112,12 +112,12 @@ export default function Details() {
     </Row>
 
     </Container>
-    <p className='pad center' style={{'fontSize': '1em', 'fontWeight': 'bold'}}>
+    <p className='pad center' style={{'fontSize': '2.5vw', 'fontWeight': 'bold'}}>
         We herein propose reallocating these funds toward the restoration of native communities.<br/>
     </p>
     
     <Button size='lg' onClick={()=>{nav('/contribute')}} className="primaryColor primaryHover">Contribute</Button>
-    <p className='center notice' style={{'fontSize': '0.8em'}}>
+    <p className='center notice' style={{'fontSize': '1.6vw'}}>
         We cannot do this alone. Your voice is greatly appreciated!
     </p>
 
