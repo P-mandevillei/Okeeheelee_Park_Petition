@@ -1,7 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
 import { Container, Navbar, Nav, Button, Row, Col, Form, Card } from "react-bootstrap";
 import { useId, useState, useEffect, useRef } from "react";
-import PadBottomContext from "../contexts/PadBottomContext";
 import ExpandContactContext from "../contexts/ExpandContactContext";
 import { isValidEmail } from "../auth/SubmissionValidations";
 import { emailPath } from "../../../../../paths/clientPaths";
@@ -9,7 +8,6 @@ import MessageBox from "./MessageBox";
 
 export default function CommonHomepage() {
     const [expandContact, setexpandContact] = useState(false);
-    const [padBottomPx, setPadBottomPx] = useState(100);
     const emailId = useId();
     const bodyId = useId();
     const footerRef = useRef();
@@ -22,10 +20,6 @@ export default function CommonHomepage() {
         setEmailWarning("");
         setMsgWarning("");
     }
-
-    useEffect(()=> {
-        setPadBottomPx(footerRef.current.offsetHeight + 50);
-    }, [expandContact, emailWarning, msgWarning]);
 
     function sendEmail(e) {
         e?.preventDefault();
@@ -69,7 +63,7 @@ export default function CommonHomepage() {
     const [body, setBody] = useState("");
     const [showMsg, setShowMsg] = useState(false);
  
-    return <>
+    return <div style={{minHeight: '100vh', display: 'flex', flexDirection: 'column'}}>
     <Navbar sticky="top" expand="sm" className="primaryColor" data-bs-theme="dark">
     <Container>
         <Navbar.Brand as={Link} to='/'>Protect Okeeheelee Park</Navbar.Brand>
@@ -84,46 +78,52 @@ export default function CommonHomepage() {
     </Container>
     </Navbar>
 
-    <ExpandContactContext.Provider value={setexpandContact}>
-    <PadBottomContext.Provider value={padBottomPx}>
-        <Outlet/>
-    </PadBottomContext.Provider>
-    </ExpandContactContext.Provider>
+    <div style={{flex: 1}}>
+        <ExpandContactContext.Provider value={setexpandContact}>
+            <Outlet/>
+        </ExpandContactContext.Provider>
+    </div>
 
-    <Navbar fixed="bottom" className="primaryColor" data-bs-theme="dark" ref={footerRef}>
+    <Navbar className="primaryColor" data-bs-theme="dark" ref={footerRef}>
     <Container>
-    <div className="center">
+    <div className="center" style={{'padding': '0.8em'}}>
     <Row>
         <Col xs={12}>
-            <Nav className="me-auto">
-                <Nav.Link onClick={()=>{setexpandContact(old=>!old)}}>{expandContact? "Hide Contact Form":"Contact Us"}</Nav.Link>
-                <Nav.Link as={Link} to="/">Home</Nav.Link>
-            </Nav>
+            <Navbar.Text>
+                <Nav.Link as={Link} to="/" className="greyHover">Home</Nav.Link>
+                <Nav.Link className="greyHover" onClick={()=>{setexpandContact(old=>!old)}}>{expandContact? "Hide Contact Form":"Contact Us"}</Nav.Link>
+            </Navbar.Text>
         </Col>
         <Col xs={12}>
-        {expandContact? <Card style={{"backgroundColor": "#2E7D32", "border": "#2E7D32"}}>
-        <Container>
-        <Row>
-            <Col xs={12}>
-                <Form.Label htmlFor={emailId}>Your Email Address<span className="warning">*</span></Form.Label>
-                <Form.Control id={emailId} ref={emailRef}/>
-                {emailWarning? <p className="warning">{emailWarning}</p>:<></>}
-            </Col>
-            
-            <Col xs={12}>
-                <Form.Label htmlFor={bodyId}>Message<span className="warning">*</span></Form.Label>
-                <Form.Control id={bodyId} as="textarea" rows={4} ref={msgRef}/>
-                {msgWarning? <p className="warning">{msgWarning}</p>:<></>}
-            </Col>
-        </Row>
+            {expandContact? <Card style={{"backgroundColor": "#2E7D32", "border": "#2E7D32"}}>
+                <Container>
+                <Row>
+                    <Col xs={12}>
+                        <Form.Label htmlFor={emailId}>Your Email Address<span className="warning">*</span></Form.Label>
+                        <Form.Control id={emailId} ref={emailRef}/>
+                        {emailWarning? <p className="warning">{emailWarning}</p>:<></>}
+                    </Col>
+                    
+                    <Col xs={12}>
+                        <Form.Label htmlFor={bodyId}>Message<span className="warning">*</span></Form.Label>
+                        <Form.Control id={bodyId} as="textarea" rows={4} ref={msgRef}/>
+                        {msgWarning? <p className="warning">{msgWarning}</p>:<></>}
+                    </Col>
+                </Row>
 
-        <MessageBox header={header} body={body} showMsg={showMsg} setShowMsg={setShowMsg} />
+                <MessageBox header={header} body={body} showMsg={showMsg} setShowMsg={setShowMsg} />
 
-        </Container>
-        <br />
-        <Button className="secondaryColor secondaryColorHover" onClick={(e)=>{sendEmail(e)}}>Submit</Button>
-        </Card>
-        : <></>}
+                </Container>
+                <br />
+                <Button className="secondaryColor secondaryColorHover" onClick={(e)=>{sendEmail(e)}}>Submit</Button>
+            </Card>
+            : <></>}
+        </Col>
+
+        <Col xs={12}>
+            <Navbar.Text style={{'fontSize': '0.8em'}}>
+                This initiative is led by the Okeeheelee Wildlife Society, a registered 501(c)(3) nonprofit organization. Please contact golfinl@gmail.com or tasman@wustl.edu with questions.
+            </Navbar.Text>
         </Col>
     </Row>
     </div>
@@ -131,5 +131,5 @@ export default function CommonHomepage() {
     
     </Container>
     </Navbar>
-    </>
+    </div>
 }

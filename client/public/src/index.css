@@ -102,3 +102,48 @@ body {
   position: 'absolute';
   right: 0;
 }
+
+.greyHover:hover {
+  color: rgba(229, 221, 221, 0.5) !important;
+}
+
+.detailParagraphs {
+  font-size: 18px;
+  padding: 1em 0;
+}
+
+.detailHeaders {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.backgroundImg {
+  position: absolute; 
+  z-index: 1;
+  display: block; 
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+}
+
+.backgroundImgFlex {
+  position: absolute; 
+  z-index: 1;
+  display: block;
+  opacity: 0.8;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.frontTextWrapper {
+  position: relative;
+  z-index: 999;
+  top: 0;
+  width: 100%; 
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

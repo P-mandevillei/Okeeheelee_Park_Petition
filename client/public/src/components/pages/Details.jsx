@@ -1,24 +1,37 @@
 import { useContext, useState } from "react";
 import { Button, Card, Carousel, Col, Container, Row } from "react-bootstrap"
 import { useNavigate } from "react-router-dom";
-import PadBottomContext from "../contexts/PadBottomContext";
-import hardwood_hammock from "../../assets/hardwood_hammock.jpg";
-import prairie from "../../assets/prairie.jpeg"
-import australian_pine from "../../assets/australian_pine.jpeg"
-import melaleuca from "../../assets/melaleuca.jpeg"
-import gopher from "../../assets/gopher.jpeg"
-import screech from "../../assets/screech.jpeg"
-import atala from "../../assets/atala.jpeg"
+import hardwood_hammock from "../../assets/pic/Habitat/1-1-hardwood.jpg";
+import pine_flatwoods from "../../assets/pic/Habitat/1-1-pine.jpg";
+import prairie from "../../assets/pic/Habitat/1-1-prairie.jpg"
+import gopher from "../../assets/pic/Animals/1-1-gopher.jpg"
+import newborn_rattle from "../../assets/pic/Animals/1-1-rattlesnake_newborn.jpg"
+import rattle_family from "../../assets/pic/Animals/rattle_family.jpg"
+import construction1 from "../../assets/pic/Construction_Area/1-1-construction1.jpg"
+import construction2 from "../../assets/pic/Construction_Area/1-1-construction2.jpg"
+import background from "../../assets/pic/Habitat/4-1-prairie.jpg";
+
 import { proposalPath } from "../../../../../paths/clientPaths";
 
 export default function Details() {
-    const padBottomPx = useContext(PadBottomContext);
     const nav = useNavigate();
     const [showProposal, setShowProposal] = useState(false);
 
-    return <div className="pad" style={{'paddingBottom': `${padBottomPx}px`}}>
-    <Card style={{border: "rgba(0,0,0,0)"}}>
-    <p className='pad center' style={{'fontSize': '2.2vw', 'fontWeight': 'bold'}}>
+    return <div>
+    
+    <Card style={{
+        "border": "rgba(0,0,0,0)",
+        position: 'relative', aspectRatio: '4/1'
+    }}>
+        <img className="backgroundImg" src={background} alt="A background image of wet prairie" />
+        
+        <p className="whiteBold frontTextWrapper" style={{fontSize: '4vw'}}>
+            Learn More
+        </p>
+    </Card>
+
+    <Card className="pad" style={{border: "rgba(0,0,0,0)"}}>
+    <p className='pad center detailHeaders'>
         Okeeheelee Park South encompasses 960 acres of native south Florida ecological communities.
         However, current preparations envision its conversion into an RV park using ~$4.1 million from the park's budget. <br />
     </p>
@@ -26,13 +39,19 @@ export default function Details() {
 
     <Container style={{'width': "90%"}}>
     <Row style={{"marginTop": '3vw', 'marginBottom': '3vw'}}>
-        <Col xs={12} sm={6} className="d-flex justify-content-center">
+        <Col sm={12} md={6} className="d-flex justify-content-center">
         <Card>
             <Carousel>
                 <Carousel.Item>
                     <img src={hardwood_hammock} alt="A picture of the hardwood hammock ecological community" style={{width:"100%", aspectRatio: "1/1"}}/>
                     <Carousel.Caption>
                         Hardwood Hammock
+                    </Carousel.Caption>
+                </Carousel.Item>
+                <Carousel.Item>
+                    <img src={pine_flatwoods} alt="A picture of the pine flatwoods ecological community" style={{width:"100%", aspectRatio: "1/1"}}/>
+                    <Carousel.Caption>
+                        Pine Flatwoods
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
@@ -45,79 +64,79 @@ export default function Details() {
             
         </Card>
         </Col>
-        <Col xs={12} sm={6} className="d-flex justify-content-center">
-            <p className='center' style={{'fontSize': "2vw"}}>
+        <Col sm={12} md={6} className="d-flex justify-content-center">
+            <p className='center detailParagraphs'>
                 The area in question is the most biodiverse section of the park and provides an essential ecosystem for native species. 
             </p>
         </Col>
     </Row>
 
     <Row style={{"marginTop": '3vw', 'marginBottom': '3vw'}}>
-        <Col xs={12} sm={{span:6, order: 'last'}} className="d-flex justify-content-center">
+        <Col sm={12} md={{span:6, order: 'last'}} className="d-flex justify-content-center">
             <Card>
-            <Carousel>
-                <Carousel.Item>
-                    <img src={australian_pine} alt="A picture of the invasive Australian pine" style={{width:"100%", aspectRatio: "1/1"}}/>
-                    <Carousel.Caption>
-                        Invasive Australian pine
-                    </Carousel.Caption>
-                </Carousel.Item>
-                <Carousel.Item>
-                    <img src={melaleuca} alt="A picture of the invasive Melaleuca" style={{width:"100%", aspectRatio: "1/1"}}/>
-                    <Carousel.Caption>
-                        Invasive Melaleuca
-                    </Carousel.Caption>
-                </Carousel.Item>
-            </Carousel>
+                <Carousel>
+                    <Carousel.Item>
+                        <img src={gopher} alt="A picture of the gopher tortoise" style={{width:"100%", aspectRatio: "1/1"}}/>
+                        <Carousel.Caption>
+                            Gopher Tortoise
+                        </Carousel.Caption>
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        <img src={rattle_family} alt="A picture of a family of Eastern Diamondback Rattlesnake" style={{width:"100%", aspectRatio: "1/1"}}/>
+                        <Carousel.Caption>
+                            Family of Eastern Diamondback Rattlesnakes
+                        </Carousel.Caption>
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        <img src={newborn_rattle} alt="A picture of a newborn Eastern Diamondback Rattlesnake" style={{width:"100%", aspectRatio: "1/1"}}/>
+                        <Carousel.Caption>
+                            Newborn Rattlesnake
+                        </Carousel.Caption>
+                    </Carousel.Item>
+                </Carousel>
             </Card>
         </Col>
-        <Col xs={12} sm={{span:6, order: 'first'}} className="d-flex justify-content-center">
-            <p className='center' style={{'fontSize': "2vw"}}>
-                Facing chronic neglect, it has been overrun with invasive species, which threaten to degrade the surrounding communities without intervension.
+        <Col sm={12} md={{span:6, order: 'first'}} className="d-flex justify-content-center">
+            <p className='center detailParagraphs'>
+                It is home to many critters, including endangered tortoises, rattlesnakes, owls, wading birds like wood storks, as well as a variety of small mammals and rare invertebrates.
             </p>
         </Col>
     </Row>
 
     <Row style={{"marginTop": '3vw', 'marginBottom': '3vw'}}>
-        <Col xs={12} sm={6} className="d-flex justify-content-center">
+        <Col sm={12} md={6} className="d-flex justify-content-center">
         <Card>
             <Carousel>
                 <Carousel.Item>
-                    <img src={atala} alt="A picture of the Atala hairstreak butterfly" style={{width:"100%", aspectRatio: "1/1"}}/>
+                    <img src={construction1} alt="A picture of the construction area" style={{width:"100%", aspectRatio: "1/1"}}/>
                     <Carousel.Caption>
-                        Atala Hairstreak Butterfly
+                        Invasive Australian pine surrounding construction
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img src={gopher} alt="A picture of the gopher tortoise" style={{width:"100%", aspectRatio: "1/1"}}/>
-                    <Carousel.Caption>
-                        Gopher Tortoise
-                    </Carousel.Caption>
-                </Carousel.Item>
-                <Carousel.Item>
-                    <img src={screech} alt="A picture of the Eastern Screech Owl" style={{width:"100%", aspectRatio: "1/1"}}/>
-                    <Carousel.Caption>
-                        Eastern Screech Owl
+                    <img src={construction2} alt="A picture of the construction area" style={{width:"100%", aspectRatio: "1/1"}}/>
+                    <Carousel.Caption style={{color: "black"}}>
+                        Area cleared for construction
                     </Carousel.Caption>
                 </Carousel.Item>
             </Carousel>
             
         </Card>
         </Col>
-        <Col xs={12} sm={6} className="d-flex justify-content-center">
-            <p className='center' style={{'fontSize': "2vw"}}>
-            The park is home to many critters, including endangered tortoises, rattlesnakes, owls, wading birds like wood storks, as well as a variety of small mammals and rare invertebrates.
+        <Col sm={12} md={6} className="d-flex justify-content-center">
+            <p className='center detailParagraphs'>
+                Facing chronic neglect since its designation as a construction area in the early 2000s, it has been overrun with invasive species, which threaten to degrade the surrounding communities without intervension.
             </p>
         </Col>
     </Row>
 
     </Container>
-    <p className='pad center' style={{'fontSize': '2.5vw', 'fontWeight': 'bold'}}>
+    <p className='pad center detailHeaders'>
         We herein propose reallocating these funds toward the restoration of native communities.<br/>
     </p>
     
     <Button size='lg' onClick={()=>{nav('/contribute')}} className="primaryColor primaryHover">Contribute</Button>
-    <p className='center notice' style={{'fontSize': '1.5vw'}}>
+    <p className='center notice' style={{'fontSize': '12px'}}>
         We cannot do this alone. Your voice is greatly appreciated!
     </p>
 
