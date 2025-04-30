@@ -29,7 +29,7 @@ export default function PublicHomepage(props) {
                 </Row>
                 <Row style={{flex: 1}}>
                     <p className="center" style={{"color": "rgb(246, 240, 240)", fontSize: "2.2vw"}}>
-                        Call for reallocation of <span className="notice">~$4.1M</span> funds <br/> 
+                        Call for reallocation of <span className="whiteBold">~$4.1M</span> funds <br/> 
                         toward <span style={{'fontWeight': "bold"}}>natural restoration</span> <br/> 
                         instead of turning it into an RV park 
                     </p>
