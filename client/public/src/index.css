@@ -147,3 +147,19 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+.detailRow {
+  margin-top: 3vw;
+  margin-bottom: 3vw;
+}
+
+.detailImg {
+  width: 100%;
+  aspect-ratio: 1/1;
+}
+
+.headerCard {
+  border: rgba(0,0,0,0);
+  position: relative;
+  aspect-ratio: 4/1;
+}

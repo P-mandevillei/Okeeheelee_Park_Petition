@@ -5,6 +5,7 @@ import { Button, Card } from "react-bootstrap";
 import { Fireworks } from '@fireworks-js/react';
 import background from "../../assets/pic/Animals/4-1-gopher.jpg";
 import { Link } from "react-router-dom";
+import Header from "./Header";
 
 export default function Signature(props) {
     const [showForm, setShowForm] = useState(true);
@@ -35,40 +36,34 @@ export default function Signature(props) {
     }, [showForm])
 
     return <>
-        <Card style={{
-            "border": "rgba(0,0,0,0)",
-            position: 'relative', aspectRatio: '4/1'
-        }}>
-            <img className="backgroundImg" src={background} alt="A background image of gopher turtle" />
-            
-            <p className="whiteBold frontTextWrapper" style={{fontSize: '4vw'}}>
-                Contribute
-            </p>
-        </Card>
+        <Header text="Contribute" background={background} alt="A background image of gopher turtle" />
+        
         <div className="pad">
-        {showForm? <SignatureForm setShowForm={setShowForm} {...props}/>
-        :<Card className="frontTextWrapper" style={{'border': 'rgba(0,0,0,0)'}}>
-            <Card style={{
-                'border': "rgba(0,0,0,0)", 'position':'absolute', 
-                "zIndex":1, 'width': '100%', height: '100%', overflow: 'hidden'
-            }}>
-                {showFirework? <Fireworks ref={fireworkRef} style={{
-                    width: '100%',
-                    height: '100%',
-                    background: "rgba(0,0,0,0)"
-                }}/> : <></>}
-            </Card>
-            
-            <Card className="frontTextWrapper" style={{border: 'rgba(0,0,0,0)', backgroundColor: 'rgba(0,0,0,0)'}}>
-                <h1 className="pad center" style={{"display": "flex"}}>Thank You for Your Support!</h1>
-                <p className="pad center notice" style={{"display": "flex", 'fontSize': '1em'}}>Your response is crucial to our cause</p>
-                <Button style={{width: '80%'}} className="secondaryColor secondaryColorHover" onClick={()=>{setShowForm(true)}}>Submit Another</Button>
-                <Link className="selectablePrimary" to="/">Home</Link>
-                <span className="selectablePrimary" onClick={()=>{setExpandContact(true)}}>Contact Us</span>
-            </Card>
-            
-        </Card>
-        }
+            {showForm? 
+                <SignatureForm setShowForm={setShowForm} {...props}/>
+            :
+                <Card className="frontTextWrapper" style={{'border': 'rgba(0,0,0,0)'}}>
+                    <Card style={{
+                        'border': "rgba(0,0,0,0)", 'position':'absolute', 
+                        "zIndex":1, 'width': '100%', height: '100%', overflow: 'hidden'
+                    }}>
+                        {showFirework? <Fireworks ref={fireworkRef} style={{
+                            width: '100%',
+                            height: '100%',
+                            background: "rgba(0,0,0,0)"
+                        }}/> : <></>}
+                    </Card>
+                    
+                    <Card className="frontTextWrapper" style={{border: 'rgba(0,0,0,0)', backgroundColor: 'rgba(0,0,0,0)'}}>
+                        <h1 className="pad center" style={{"display": "flex"}}>Thank You for Your Support!</h1>
+                        <p className="pad center notice" style={{"display": "flex", 'fontSize': '1em'}}>Your response is crucial to our cause</p>
+                        <Button style={{width: '80%'}} className="secondaryColor secondaryColorHover" onClick={()=>{setShowForm(true)}}>Submit Another</Button>
+                        <Link className="selectablePrimary" to="/">Home</Link>
+                        <span className="selectablePrimary" onClick={()=>{setExpandContact(true)}}>Contact Us</span>
+                    </Card>
+                    
+                </Card>
+            }
         </div>
     </>
 }

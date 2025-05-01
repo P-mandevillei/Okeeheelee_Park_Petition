@@ -8,6 +8,12 @@ import MessageBox from "./MessageBox";
 
 export default function CommonHomepage() {
     const [expandContact, setexpandContact] = useState(false);
+    useEffect(()=> {
+        if (expandContact) {
+            window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
+        }
+    }, [expandContact])
+
     const emailId = useId();
     const bodyId = useId();
     const footerRef = useRef();
