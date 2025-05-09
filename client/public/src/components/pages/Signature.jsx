@@ -56,8 +56,8 @@ export default function Signature(props) {
                     
                     <Card className="frontTextWrapper" style={{border: 'rgba(0,0,0,0)', backgroundColor: 'rgba(0,0,0,0)'}}>
                         <h1 className="pad center" style={{"display": "flex"}}>Thank You for Your Support!</h1>
-                        <p className="pad center notice" style={{"display": "flex", 'fontSize': '1em'}}>Your response is crucial to our cause</p>
-                        <Button style={{width: '80%'}} className="secondaryColor secondaryColorHover" onClick={()=>{setShowForm(true)}}>Submit Another</Button>
+                        <p className="pad center notice" style={{"display": "flex", 'fontSize': '1em'}}>Your support is crucial to our cause</p>
+                        <Button style={{width: '80%'}} className="secondaryColor secondaryColorHover" onClick={()=>{setShowForm(true)}}>Sign Another</Button>
                         <Link className="selectablePrimary" to="/">Home</Link>
                         <span className="selectablePrimary" onClick={()=>{setExpandContact(true)}}>Contact Us</span>
                     </Card>

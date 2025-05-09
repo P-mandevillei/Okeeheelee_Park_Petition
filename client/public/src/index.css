@@ -163,3 +163,11 @@ body {
   position: relative;
   aspect-ratio: 4/1;
 }
+
+.selectableGrey {
+  color: rgb(161, 196, 163) !important;
+}
+
+.selectableGrey:hover {
+  color: white !important;
+}

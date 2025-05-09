@@ -110,7 +110,7 @@ export default function SignatureForm(props) {
     }
 
     return <Card border="light" className="pad">
-        <h1 className="center">Sign the petition!</h1>
+        <h1 className="center">Add Your Name to Our Coalition</h1>
         <br />
         <MessageBox header={msgHeader} body={msgBody} showMsg={showMsg} setShowMsg={setShowMsg}/>
 

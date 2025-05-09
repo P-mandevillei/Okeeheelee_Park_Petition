@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { Button, Card, Carousel, Col, Container, Row } from "react-bootstrap"
 import { useNavigate } from "react-router-dom";
+
 import hardwood_hammock from "../../assets/pic/Habitat/1-1-hardwood.jpg";
 import pine_flatwoods from "../../assets/pic/Habitat/1-1-pine.jpg";
 import prairie from "../../assets/pic/Habitat/1-1-prairie.jpg"
@@ -13,7 +14,7 @@ import background from "../../assets/pic/Habitat/4-1-prairie.jpg";
 import australian_pine_1 from "../../assets/pic/Invasive_Plants/1-1-apine1.jpg";
 import australian_pine_2 from "../../assets/pic/Invasive_Plants/1-1-apine2.jpg";
 
-import { proposalPath } from "../../../../../paths/clientPaths";
+import { allFactsPath, proposalPath } from "../../../../../paths/clientPaths";
 import PicAndParagraph from "./PicAndParagraph";
 import Header from "./Header";
 
@@ -85,9 +86,25 @@ export default function Details() {
             {showProposal? "Hide Proposal"
             : "Read the Full Proposal"}
         </p>
+        
         {showProposal?
-            <iframe height={550} src={`https://docs.google.com/gview?url=${proposalPath}&embedded=true`}></iframe>
+            <iframe 
+                height={550} 
+                src={proposalPath}
+                width="100%"
+                title="Full Proposal"
+            >
+                <p>
+                    Your browser does not support online pdf viewing. You can {' '}
+                    <a className="selectablePrimary" href={proposalPath} download={proposalPath}>
+                        download the full proposal
+                    </a>.
+                </p>
+            </iframe>
         : <></>}
+        <a href={allFactsPath} target="_blank"> 
+            All the Facts 
+        </a>
 
         </Card>
 

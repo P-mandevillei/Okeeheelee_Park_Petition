@@ -22,8 +22,8 @@ export default function PublicHomepage(props) {
                 </Row>
                 <Row className="center" style={{flex: 1, width: '100%'}}>
                     <Col xs={12}>
-                        <Button onClick={()=>{nav('/contribute')}} className="secondaryColor secondaryColorHover" style={{'fontSize': "2.5vw", 'width': '50%'}}>
-                            Contribute!
+                        <Button onClick={()=>{nav('/contribute')}} className="secondaryColor secondaryColorHover" style={{'fontSize': "2.5vw", 'width': '50%', 'fontWeight': 'bold'}}>
+                            Join Our Coalition!
                         </Button>
                     </Col>
                 </Row>

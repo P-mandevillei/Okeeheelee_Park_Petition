@@ -116,7 +116,12 @@ def send_email():
 
 @app.route(paths.proposal_path, methods=['GET'])
 def send_proposal():
-    return send_file('./static/Proposal_for_a_Restoration_Project_at_Okeeheelee_Park_South.docx')
+    return send_file(paths.proposal_doc_path)
+
+@app.route(paths.all_facts_path, methods=['GET'])
+def send_all_facts():
+    return send_file(paths.all_facts_doc_path)
+
 
 if __name__ == "__main__":
     app.run(

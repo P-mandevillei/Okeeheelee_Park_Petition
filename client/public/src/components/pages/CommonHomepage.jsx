@@ -78,7 +78,7 @@ export default function CommonHomepage() {
         <Nav className="me-auto">
             <Nav.Link as={Link} to='/'>Home</Nav.Link>
             <Nav.Link as={Link} to='/details'>Learn More</Nav.Link>
-            <Nav.Link as={Link} to='/contribute'>Contribute</Nav.Link>
+            <Nav.Link as={Link} to='/contribute'>Join Coalition</Nav.Link>
         </Nav>
         </Navbar.Collapse>
     </Container>
@@ -128,7 +128,10 @@ export default function CommonHomepage() {
 
         <Col xs={12}>
             <Navbar.Text style={{'fontSize': '0.8em'}}>
-                This initiative is led by the Okeeheelee Wildlife Society, a registered 501(c)(3) nonprofit organization. Please contact golfinl@gmail.com or tasman@wustl.edu with questions.
+                This initiative is led by the Okeeheelee Wildlife Society, a registered 501(c)(3) nonprofit organization. 
+                Please contact {" "}
+                <a className="selectableGrey" href="mailto:golfinl@gmail.com">golfinl@gmail.com</a> or {" "}
+                <a className="selectableGrey" href="mailto:tasman@wustl.edu">tasman@wustl.edu</a> with questions.
             </Navbar.Text>
         </Col>
     </Row>
