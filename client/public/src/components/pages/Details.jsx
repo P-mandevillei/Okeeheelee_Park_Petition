@@ -77,7 +77,7 @@ export default function Details() {
                 We herein propose reallocating these funds toward the restoration of native communities.<br/>
             </p>
             
-            <Button size='lg' onClick={()=>{nav('/contribute')}} className="primaryColor primaryHover">Contribute</Button>
+            <Button size='lg' onClick={()=>{nav('/contribute')}} className="primaryColor primaryHover">Join Our Coalition</Button>
             <p className='center notice' style={{'fontSize': '12px'}}>
                 We cannot do this alone. Your voice is greatly appreciated!
             </p>
@@ -97,7 +97,7 @@ export default function Details() {
                     </Col>
                 </Row>
             </Container>
-            
+            <br/>
             {showProposal?
                 <iframe 
                     height={550} 
