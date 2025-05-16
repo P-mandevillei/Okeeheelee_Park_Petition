@@ -3,7 +3,7 @@ import { Card } from "react-bootstrap";
 
 function DisplayHeader(props) {
     return <Card className='headerCard'>
-        <img className="backgroundImg" src={props.background} alt={props.alt} />
+        <img className="backgroundImg" src={props.background} alt={props.alt} loading="lazy" />
         <p className="whiteBold frontTextWrapper" style={{fontSize: '4vw'}}>
             {props.text}
         </p>

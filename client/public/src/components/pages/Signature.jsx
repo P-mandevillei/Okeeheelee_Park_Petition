@@ -3,7 +3,7 @@ import SignatureForm from "./SignatureForm";
 import ExpandContactContext from "../contexts/ExpandContactContext";
 import { Button, Card } from "react-bootstrap";
 import { Fireworks } from '@fireworks-js/react';
-import background from "../../assets/pic/Animals/4-1-gopher.jpg";
+import background from "../../assets/tinified/4-1-gopher.webp";
 import { Link } from "react-router-dom";
 import Header from "./Header";
 
@@ -36,7 +36,7 @@ export default function Signature(props) {
     }, [showForm])
 
     return <>
-        <Header text="Contribute" background={background} alt="A background image of gopher turtle" />
+        <Header text="Join Our Coalition!" background={background} alt="A background image of gopher turtle" />
         
         <div className="pad">
             {showForm? 

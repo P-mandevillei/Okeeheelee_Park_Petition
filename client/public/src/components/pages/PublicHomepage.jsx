@@ -1,11 +1,15 @@
-import { useContext, useEffect } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import palm from "../../assets/pic/Habitat/DSC04274.jpg"
+import palm from "../../assets/tinified/DSC04274.webp"
+import { useEffect } from "react";
 
-export default function PublicHomepage(props) {
+export default function PublicHomepage() {
 
     const nav = useNavigate();
+    useEffect(() => {
+        const palmSrc = new Image();
+        palmSrc.src = palm;
+    }, []);
 
     return <div>
         <Card style={{

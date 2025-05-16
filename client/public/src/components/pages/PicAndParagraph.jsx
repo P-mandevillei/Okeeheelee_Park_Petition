@@ -8,7 +8,7 @@ function DisplayPicAndParagraph(props) {
         <Card>
             <Carousel>
                 {props.img.map(cur => <Carousel.Item key={cur.caption}>
-                    <img src={cur.src} alt={cur.alt} className="detailImg" />
+                    <img src={cur.src} alt={cur.alt} className="detailImg" loading="lazy" />
                     <Carousel.Caption style={cur?.style}>
                         {cur.caption}
                     </Carousel.Caption>
@@ -24,5 +24,18 @@ function DisplayPicAndParagraph(props) {
     </Row>
 }
 
-const PicAndParagraph = memo(DisplayPicAndParagraph);
+const PicAndParagraph = memo(DisplayPicAndParagraph, (prev, next) => {
+    if (prev.paragraph != next.paragraph || prev.putImgLeft != next.putImgLeft || prev.img.length != next.img.length) {
+        return false;
+    }
+    if (prev.img === next.img) {
+        return true;
+    }
+    for (let i=0; i<prev.img.length; ++i) {
+        if (prev.img[i] != next.img[i]) {
+            return false;
+        }
+    }
+    return true;    
+});
 export default PicAndParagraph;
