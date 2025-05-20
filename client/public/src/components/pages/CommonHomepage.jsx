@@ -3,8 +3,9 @@ import { Container, Navbar, Nav, Button, Row, Col, Form, Card } from "react-boot
 import { useId, useState, useEffect, useRef } from "react";
 import ExpandContactContext from "../contexts/ExpandContactContext";
 import { isValidEmail } from "../auth/SubmissionValidations";
-import { emailPath } from "../../../../../paths/clientPaths";
+import { adminPublicEmail, emailPath } from "../../../../../paths/clientPaths";
 import MessageBox from "./MessageBox";
+import { ClipLoader } from "react-spinners";
 
 export default function CommonHomepage() {
     const [expandContact, setexpandContact] = useState(false);
@@ -27,6 +28,8 @@ export default function CommonHomepage() {
         setMsgWarning("");
     }
 
+    const [showSubmitText, setShowSubmitText] = useState(true);
+
     function sendEmail(e) {
         e?.preventDefault();
         resetFields();
@@ -43,6 +46,7 @@ export default function CommonHomepage() {
         }
 
         const data = {"subject": `message from ${email}`, "msg": msg};
+        setShowSubmitText(false);
         fetch(emailPath, {
             method: "POST",
             headers: {
@@ -51,6 +55,7 @@ export default function CommonHomepage() {
             body: JSON.stringify(data)
         }).then(res => res.json())
         .then(result => {
+            setShowSubmitText(true);
             if (!result['error']) {
                 setHeader("Success!");
                 setBody("Your message has been sent to our team.");
@@ -62,7 +67,12 @@ export default function CommonHomepage() {
                 setBody(result['msg']);
                 setShowMsg(true);
             }
-        }).catch(err => console.log(err));
+        }).catch(() => {
+            setShowSubmitText(true);
+            setHeader("Sorry, something went wrong with your email.");
+            setBody(`Unable to connect to the server. Please try again later or contact our admin at ${adminPublicEmail}.`);
+            setShowMsg(true);
+        });
     }
     
     const [header, setHeader] = useState("");
@@ -121,7 +131,9 @@ export default function CommonHomepage() {
 
                 </Container>
                 <br />
-                <Button className="secondaryColor secondaryColorHover" onClick={(e)=>{sendEmail(e)}}>Submit</Button>
+                <Button className="secondaryColor secondaryColorHover hugeBtnEffect" onClick={(e)=>{sendEmail(e)}}>
+                    {showSubmitText? "Submit": <ClipLoader color="#36d7b7" />}
+                </Button>
             </Card>
             : <></>}
         </Col>

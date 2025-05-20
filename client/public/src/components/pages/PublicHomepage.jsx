@@ -26,7 +26,7 @@ export default function PublicHomepage() {
                 </Row>
                 <Row className="center" style={{flex: 1, width: '100%'}}>
                     <Col xs={12}>
-                        <Button onClick={()=>{nav('/contribute')}} className="secondaryColor secondaryColorHover" style={{'fontSize': "2.5vw", 'width': '50%', 'fontWeight': 'bold'}}>
+                        <Button onClick={()=>{nav('/contribute')}} className="secondaryColor secondaryColorHover hugeBtnEffect" style={{'fontSize': "2.5vw", 'width': '50%', 'fontWeight': 'bold'}}>
                             Join Our Coalition!
                         </Button>
                     </Col>
@@ -41,7 +41,7 @@ export default function PublicHomepage() {
                 
                 <Row style={{'padding': '1vw', flex: 1}}>
                     <Col xs={12} className="center">
-                        <span className="selectablePrimaryFlipped" onClick={()=>nav("/details")} style={{'fontSize': "1.5vw"}}>
+                        <span className="selectableSecondary" onClick={()=>nav("/details")} style={{'fontSize': "1.5vw"}}>
                             Read More
                         </span>
                     </Col> 

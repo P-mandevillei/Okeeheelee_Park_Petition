@@ -5,3 +5,5 @@ export const proposalPath = `${serverRoot}/proposal`
 export const allFactsPath = `${serverRoot}/all_facts`
 
 export const googleRecaptchaClientKey = "6LfQLxMrAAAAAEWKbf_bXasxLCGEaOVdnpSCQhn1"
+
+export const adminPublicEmail = 'example@gmail.com';

@@ -33,7 +33,7 @@ body {
 }
 
 .secondaryColorHover:hover {
-  background-color: #FFB300 !important
+  background-color: #d49501 !important
 }
 
 .pad {
@@ -67,7 +67,7 @@ body {
 
 .selectableSecondary:hover {
   cursor: pointer;
-  color: #FFB300;
+  color: #d49501;
 }
 
 .primaryHover:hover {
@@ -170,4 +170,8 @@ body {
 
 .selectableGrey:hover {
   color: white !important;
+}
+
+.hugeBtnEffect:hover {
+  border-radius: 50px;
 }

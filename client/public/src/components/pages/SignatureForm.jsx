@@ -1,9 +1,10 @@
 import { useContext, useEffect, useRef, useState } from "react"
 import {Button, Card, Container, Form, Row, Col, ToastContainer, Toast} from "react-bootstrap"
 import { isValidEmail, isValidUSPhone, isValidZipCode } from "../auth/SubmissionValidations";
-import { googleRecaptchaClientKey, signPath } from "../../../../../paths/clientPaths";
+import { adminPublicEmail, googleRecaptchaClientKey, signPath } from "../../../../../paths/clientPaths";
 import ReCAPTCHA from "react-google-recaptcha";
 import MessageBox from "./MessageBox";
+import { ClipLoader } from "react-spinners";
 
 export default function SignatureForm(props) {
 
@@ -47,6 +48,7 @@ export default function SignatureForm(props) {
     const [showMsg, setShowMsg] = useState(false);
     const [msgHeader, setMsgHeader] = useState("");
     const [msgBody, setMsgBody] = useState("");
+    const [showSignText, setShowSignText] = useState(true);
 
     function SubmitSignature(e) {
         e?.preventDefault();
@@ -85,6 +87,8 @@ export default function SignatureForm(props) {
             "recaptchaToken": recaptchaRef.current.getValue()
         }
 
+        setShowSignText(false);
+
         fetch(signPath, {
             method: "POST",
             headers: {
@@ -99,13 +103,19 @@ export default function SignatureForm(props) {
             return res.json();
         })
         .then(result => {
+            setShowSignText(true);
             if (result.error === true) {
                 setMsgHeader("Submission Failed");
                 setMsgBody(result.msg);
                 setShowMsg(true);
             }
         })
-        .catch(err => console.log(err));
+        .catch(() => {
+            setShowSignText(true);
+            setMsgHeader("Submission Failed");
+            setMsgBody(`Unable to establish a connection to the server. Please try again later or contact our admin at ${adminPublicEmail}.`);
+            setShowMsg(true);
+        });
 
     }
 
@@ -169,6 +179,8 @@ export default function SignatureForm(props) {
         </div>
         <br />
         
-        <Button className="center primaryColor primaryHover" style={{"width": "95%"}} onClick={SubmitSignature}>Sign!</Button>
+        <Button className="center primaryColor primaryHover hugeBtnEffect" style={{"width": "95%"}} onClick={SubmitSignature}>
+            {showSignText? "Sign!" : <ClipLoader color="#36d7b7" />}
+        </Button>
     </Card>
 }
