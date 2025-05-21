@@ -131,7 +131,7 @@ export default function CommonHomepage() {
 
                 </Container>
                 <br />
-                <Button className="secondaryColor secondaryColorHover hugeBtnEffect" onClick={(e)=>{sendEmail(e)}}>
+                <Button className="secondaryColor secondaryColorHover hugeBtnEffect" onClick={(e)=>{sendEmail(e)}} disabled={!showSubmitText}>
                     {showSubmitText? "Submit": <ClipLoader color="#36d7b7" />}
                 </Button>
             </Card>

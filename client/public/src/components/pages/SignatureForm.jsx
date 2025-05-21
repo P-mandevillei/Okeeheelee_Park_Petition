@@ -179,7 +179,7 @@ export default function SignatureForm(props) {
         </div>
         <br />
         
-        <Button className="center primaryColor primaryHover hugeBtnEffect" style={{"width": "95%"}} onClick={SubmitSignature}>
+        <Button className="center primaryColor primaryHover hugeBtnEffect" style={{"width": "95%"}} onClick={SubmitSignature} disabled={!showSignText}>
             {showSignText? "Sign!" : <ClipLoader color="#36d7b7" />}
         </Button>
     </Card>
