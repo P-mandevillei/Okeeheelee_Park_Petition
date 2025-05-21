@@ -2,9 +2,9 @@ import { useContext, useEffect, useRef, useState } from "react"
 import {Button, Card, Container, Form, Row, Col, ToastContainer, Toast} from "react-bootstrap"
 import { isValidEmail, isValidUSPhone, isValidZipCode } from "../auth/SubmissionValidations";
 import { adminPublicEmail, googleRecaptchaClientKey, signPath } from "../../../../../paths/clientPaths";
-import ReCAPTCHA from "react-google-recaptcha";
 import MessageBox from "./MessageBox";
 import { ClipLoader } from "react-spinners";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 export default function SignatureForm(props) {
 
@@ -50,7 +50,9 @@ export default function SignatureForm(props) {
     const [msgBody, setMsgBody] = useState("");
     const [showSignText, setShowSignText] = useState(true);
 
-    function SubmitSignature(e) {
+    const { executeRecaptcha } = useGoogleReCaptcha();
+
+    async function SubmitSignature(e) {
         e?.preventDefault();
         resetWarnings();
 
@@ -76,6 +78,7 @@ export default function SignatureForm(props) {
             return;
         }
 
+        const token = await executeRecaptcha('submit');
         const data = {
             "firstName": firstName.current.value,
             "lastName": lastName.current.value,
@@ -84,7 +87,7 @@ export default function SignatureForm(props) {
             "phone": phone.current.value?? "",
             "address1": address1.current.value?? "",
             "address2": address2.current.value?? "",
-            "recaptchaToken": recaptchaRef.current.getValue()
+            "recaptchaToken": token
         }
 
         setShowSignText(false);
@@ -172,10 +175,7 @@ export default function SignatureForm(props) {
         </Container>        
         <br />
         <div className="center">
-        <ReCAPTCHA
-            ref={recaptchaRef}
-            sitekey={googleRecaptchaClientKey}
-        />
+        
         </div>
         <br />
         

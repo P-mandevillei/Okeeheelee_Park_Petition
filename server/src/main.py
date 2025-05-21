@@ -1,20 +1,19 @@
-from flask import Flask, jsonify, request, send_file, url_for, render_template
+from flask import Flask, send_from_directory, request, send_file, url_for, render_template
 # from flask_cors import CORS
 import paths
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import requests
 import validations
-from datetime import timedelta, datetime
-from bson.objectid import ObjectId
+from datetime import datetime
 from flask_mail import Mail, Message
-import json
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="../../dist")
+
 app.config['MAIL_MAX_EMAILS'] = 1000
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'   # Gmail SMTP server
 app.config['MAIL_USERNAME'] = os.getenv('email_username')
@@ -35,7 +34,7 @@ mail = Mail(app)
 
 # connect with mongodb
 # https://cloud.mongodb.com
-client = MongoClient(app.config['MONGODB_URI'], server_api=ServerApi('1'))
+client = MongoClient(app.config['MONGODB_URI'])
 try:
     client.admin.command('ping')
     print("Pinged your deployment. You successfully connected to MongoDB!")
@@ -54,10 +53,6 @@ def recaptcha_validate(token):
     res = requests.post(app.config['GOOGLE_RECAPTCHA_API'], data=body)
     response = res.json()
     return response['success']
-
-@app.route("/", methods=['GET'])
-def main():
-    return render_template(paths.public_page_path)
 
 @app.route(paths.sign_path, methods=['POST'])
 def sign():
@@ -100,6 +95,10 @@ def sign():
 @app.route(paths.email_path, methods=['POST'])
 def send_email():
     data = request.get_json()
+
+    if not 'recaptchaToken' in data.keys() or not recaptcha_validate(data['recaptchaToken']):
+        return {"error": True, "msg": "You smell like a robot! Please try again with reCAPTCHA."}, 401
+
     if ('subject' not in data.keys() or len(data['subject'])==0 or 'msg' not in data.keys() or len(data['msg'])==0):
         return {"error": True, "msg": "Missing Input Fields"}, 400
     
@@ -111,7 +110,7 @@ def send_email():
     try:
         mail.send(msg)
     except Exception as e:
-        return {'error': True, 'msg': f"This is a message meant for admins: {str(e)}"}, 500
+        return {'error': True, 'msg': f"Unable to connect to the server. Please try again later or contact our admins at {app.config['MAIL_USERNAME']} with the following message: {str(e)}"}, 500
     return {'error': False}, 200
 
 @app.route(paths.proposal_path, methods=['GET'])
@@ -122,10 +121,21 @@ def send_proposal():
 def send_all_facts():
     return send_file(paths.all_facts_doc_path)
 
+@app.route('/', defaults={'path': ''})
+@app.route("/<path:path>")
+def main(path):
+    if path.startswith("api/"):
+        return {"error": True, "msg": "API path not found"}, 404
+    
+    file_path = os.path.join(app.static_folder, path)
+    if path != "" and os.path.exists(file_path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, paths.public_page_path)
 
 if __name__ == "__main__":
     app.run(
-        # host='0.0.0.0', 
-        port=5000, #3456, 
+        #host='0.0.0.0',
+        port=5000,
         debug=True
     )

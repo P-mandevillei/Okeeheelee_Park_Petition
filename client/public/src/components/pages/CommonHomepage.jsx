@@ -6,6 +6,7 @@ import { isValidEmail } from "../auth/SubmissionValidations";
 import { adminPublicEmail, emailPath } from "../../../../../paths/clientPaths";
 import MessageBox from "./MessageBox";
 import { ClipLoader } from "react-spinners";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 export default function CommonHomepage() {
     const [expandContact, setexpandContact] = useState(false);
@@ -29,8 +30,9 @@ export default function CommonHomepage() {
     }
 
     const [showSubmitText, setShowSubmitText] = useState(true);
+    const { executeRecaptcha } = useGoogleReCaptcha();
 
-    function sendEmail(e) {
+    async function sendEmail(e) {
         e?.preventDefault();
         resetFields();
 
@@ -45,7 +47,12 @@ export default function CommonHomepage() {
             return;
         }
 
-        const data = {"subject": `message from ${email}`, "msg": msg};
+        const token = await executeRecaptcha();
+        const data = {
+            "subject": `message from ${email}`, 
+            "msg": msg,
+            "recaptchaToken": token
+        };
         setShowSubmitText(false);
         fetch(emailPath, {
             method: "POST",
