@@ -41,7 +41,7 @@ try:
 except Exception as e:
     print(e)
 
-db = client.cse330_m8
+db = client.protect_okeeheelee
 signatures = db.signatures
 
 def recaptcha_validate(token):
@@ -71,9 +71,12 @@ def sign():
         data['phone'])):
         return {'error': True, 'msg': 'Invalid inputs!'}, 400
     
-    duplicate = signatures.count_documents({'firstName': data['firstName'], 'lastName': data['lastName'], 'email': data['email']})
-    if duplicate != 0:
-        return {'error': True, 'msg': "You have submitted a duplicate signature."}, 400
+    try:
+        duplicate = signatures.count_documents({'firstName': data['firstName'], 'lastName': data['lastName'], 'email': data['email']})
+        if duplicate != 0:
+            return {'error': True, 'msg': "You have submitted a duplicate signature."}, 400
+    except Exception as e:
+        return {'error': True, 'msg': f"Unable to connect to the database. Please try again later or contact our admins at {app.config['MAIL_USERNAME']} with the following message: {str(e)}"}, 500
 
     signature = {
         "time": datetime.now().timestamp(),
@@ -89,8 +92,7 @@ def sign():
         signatures.insert_one(signature)
         return {"error": False}
     except Exception as e:
-        print(e)
-        return {"error": True, "msg": "Sorry, your request cannot be processed by the database."}, 500
+        return {'error': True, 'msg': f"Unable to connect to the database. Please try again later or contact our admins at {app.config['MAIL_USERNAME']} with the following message: {str(e)}"}, 500
 
 @app.route(paths.email_path, methods=['POST'])
 def send_email():
@@ -120,6 +122,14 @@ def send_proposal():
 @app.route(paths.all_facts_path, methods=['GET'])
 def send_all_facts():
     return send_file(paths.all_facts_doc_path)
+
+@app.route(paths.count_signs_path, methods=['GET'])
+def count_signs():
+    try:
+        count = signatures.count_documents({})
+        return {'error': False, 'count': count}
+    except Exception as e:
+        return {'error': True, 'msg': f"Your signature has been recorded, but we are unable to connect to the database at the moment. Please try again later or contact our admins at {app.config['MAIL_USERNAME']} with the following message: {str(e)}"}, 500
 
 @app.route('/', defaults={'path': ''})
 @app.route("/<path:path>")
