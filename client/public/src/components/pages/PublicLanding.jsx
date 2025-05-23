@@ -10,7 +10,7 @@ export default function PublicLanding() {
         <p style={{"fontWeight": 'bold', 'fontSize': '20px'}}>
             You seem to have arrived at an uncharted territory!
         </p>
-        <Button as={Link} to='/' className="primaryColor primaryHover">
+        <Button as={Link} to='/' className="primaryColor primaryHover hugeBtnEffect">
             Back to Safety
         </Button>
     </div>
