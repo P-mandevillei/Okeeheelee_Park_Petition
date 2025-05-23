@@ -89,7 +89,7 @@ export default function CommonHomepage() {
     return <div style={{minHeight: '100vh', display: 'flex', flexDirection: 'column'}}>
     <Navbar sticky="top" expand="sm" className="primaryColor" data-bs-theme="dark">
     <Container>
-        <Navbar.Brand as={Link} to='/'>Protect Okeeheelee Park</Navbar.Brand>
+        <Navbar.Brand as={Link} to='/'><img src="./pine_icon.png" alt="An icon of a pine leaf" width="30" style={{'aspectRatio': '1/1'}} className="d-inline-block align-top"/></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
