@@ -7,6 +7,7 @@ import { adminPublicEmail, emailPath } from "../../../../../paths/clientPaths";
 import MessageBox from "./MessageBox";
 import { ClipLoader } from "react-spinners";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import pine_icon from "../../assets/pic/pine_icon.png";
 
 export default function CommonHomepage() {
     const [expandContact, setexpandContact] = useState(false);
@@ -89,7 +90,7 @@ export default function CommonHomepage() {
     return <div style={{minHeight: '100vh', display: 'flex', flexDirection: 'column'}}>
     <Navbar sticky="top" expand="sm" className="primaryColor" data-bs-theme="dark">
     <Container>
-        <Navbar.Brand as={Link} to='/'><img src="./pine_icon.png" alt="An icon of a pine leaf" width="30" style={{'aspectRatio': '1/1'}} className="d-inline-block align-top"/></Navbar.Brand>
+        <Navbar.Brand as={Link} to='/'><img src={pine_icon} alt="An icon of a pine leaf" width="30" style={{'aspectRatio': '1/1'}} className="d-inline-block align-top"/></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
