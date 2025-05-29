@@ -6,7 +6,7 @@ function DisplayPicAndParagraph(props) {
     return <Row className='detailRow'>
         <Col sm={12} md={{span:6, order: props.putImgLeft? 'first':'last'}} className="d-flex justify-content-center">
         <Card>
-            <Carousel>
+            <Carousel interval={props.autoplay==='1'? 4000:null}>
                 {props.img.map(cur => <Carousel.Item key={cur.caption}>
                     <img src={cur.src} alt={cur.alt} className="detailImg" loading="lazy" />
                     <Carousel.Caption style={cur?.style}>
@@ -25,7 +25,8 @@ function DisplayPicAndParagraph(props) {
 }
 
 const PicAndParagraph = memo(DisplayPicAndParagraph, (prev, next) => {
-    if (prev.paragraph != next.paragraph || prev.putImgLeft != next.putImgLeft || prev.img.length != next.img.length) {
+
+    if (prev.paragraph != next.paragraph || prev.putImgLeft != next.putImgLeft || prev.img.length != next.img.length || prev.autoplay != next.autoplay) {
         return false;
     }
     if (prev.img === next.img) {
@@ -36,6 +37,6 @@ const PicAndParagraph = memo(DisplayPicAndParagraph, (prev, next) => {
             return false;
         }
     }
-    return true;    
+    return true;
 });
 export default PicAndParagraph;

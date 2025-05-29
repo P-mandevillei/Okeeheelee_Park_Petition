@@ -1,5 +1,5 @@
-import { useContext, useState } from "react";
-import { Button, Card, Carousel, Col, Container, Row } from "react-bootstrap"
+import { useContext, useId, useState } from "react";
+import { Button, Card, Carousel, Col, Container, Form, Row } from "react-bootstrap"
 import { useNavigate } from "react-router-dom";
 
 import hardwood_hammock from "../../assets/tinified/1-1-hardwood.webp";
@@ -21,11 +21,26 @@ import Header from "./Header";
 export default function Details() {
     const nav = useNavigate();
     const [showProposal, setShowProposal] = useState(false);
+    const [isAutoplayOn, setIsAutoplayOn] = useState('1');
+    const autoplayId = useId();
 
     return <div>
         <Header text="Learn More" background={background} alt="A background image of wet prairie" />
 
         <Card className="pad" style={{border: "rgba(0,0,0,0)"}}>
+            <div className="center" style={{position: 'fixed', right: 0, top: 55, backgroundColor: 'white', fontSize: 13, borderRadius: 5, zIndex: 1}}>
+                <Form.Label htmlFor={autoplayId} style={{margin: 0}}>Autoplay</Form.Label>
+                <Form.Select
+                    id={autoplayId}
+                    className={isAutoplayOn==='1'? "secondaryText":"primaryText"} 
+                    style={{fontSize: 13}} 
+                    value={isAutoplayOn} 
+                    onChange={(e)=>{setIsAutoplayOn(e.target.value)}}
+                >
+                    <option className="secondaryText" value={'1'}>On</option>
+                    <option className="primaryText" value={'0'}>Off</option>
+                </Form.Select>
+            </div>
             <p className='pad center detailHeaders'>
                 Okeeheelee Park South encompasses 960 acres of native south Florida ecological communities.
                 However, current preparations envision its conversion into an RV park using ~$4.1 million from the park's budget. <br />
@@ -40,6 +55,7 @@ export default function Details() {
                         {src: prairie, alt: "A picture of the pine flatwoods ecological community", caption: "Wet Prairie"}
                     ]}
                     putImgLeft = {false}
+                    autoplay = {isAutoplayOn}
                 />
             
                 <PicAndParagraph 
@@ -50,6 +66,7 @@ export default function Details() {
                         {src: newborn_rattle, alt: "A picture of a newborn Eastern Diamondback Rattlesnake", caption: "Newborn Rattlesnake"}
                     ]}
                     putImgLeft = {true}
+                    autoplay = {isAutoplayOn}
                 />
 
                 <PicAndParagraph 
@@ -59,6 +76,7 @@ export default function Details() {
                         {src: construction1, alt: "A picture of the construction area", caption: "Invasive Australian pines surrounding construction"}                
                     ]}
                     putImgLeft = {false}
+                    autoplay = {isAutoplayOn}
                 />
 
                 <PicAndParagraph 
@@ -68,6 +86,7 @@ export default function Details() {
                         {src: australian_pine_2, alt: "A picture of the invasive Australian pine", caption: "More Invasive Australian Pines"}                
                     ]}
                     putImgLeft = {true}
+                    autoplay = {isAutoplayOn}
                 />
 
 
