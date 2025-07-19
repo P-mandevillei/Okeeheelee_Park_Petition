@@ -37,50 +37,59 @@ export default function CommonHomepage() {
         e?.preventDefault();
         resetFields();
 
-        const email = emailRef.current.value;
-        const msg = msgRef.current.value;
-        if (!isValidEmail(email)) {
-            setEmailWarning("Please enter a valid email address.");
-            return;
-        }
-        if (!msg) {
-            setMsgWarning("Please enter a message.");
-            return;
-        }
-
-        const token = await executeRecaptcha();
-        const data = {
-            "subject": `message from ${email}`, 
-            "msg": msg,
-            "recaptchaToken": token
-        };
-        setShowSubmitText(false);
-        fetch(emailPath, {
-            method: "POST",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify(data)
-        }).then(res => res.json())
-        .then(result => {
-            setShowSubmitText(true);
-            if (!result['error']) {
-                setHeader("Success!");
-                setBody("Your message has been sent to our team.");
-                setShowMsg(true);
-                emailRef.current.value = "";
-                msgRef.current.value = "";
-            } else {
-                setHeader("Sorry, something went wrong with your email.");
-                setBody(result['msg']);
-                setShowMsg(true);
+        try {
+            const email = emailRef.current.value;
+            const msg = msgRef.current.value;
+            if (!isValidEmail(email)) {
+                setEmailWarning("Please enter a valid email address.");
+                return;
             }
-        }).catch(() => {
+            if (!msg) {
+                setMsgWarning("Please enter a message.");
+                return;
+            }
+
+            const token = await executeRecaptcha();
+            const data = {
+                "subject": `message from ${email}`, 
+                "msg": msg,
+                "recaptchaToken": token
+            };
+            setShowSubmitText(false);
+            fetch(emailPath, {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify(data)
+            }).then(res => res.json())
+            .then(result => {
+                setShowSubmitText(true);
+                if (!result['error']) {
+                    setHeader("Success!");
+                    setBody("Your message has been sent to our team.");
+                    setShowMsg(true);
+                    emailRef.current.value = "";
+                    msgRef.current.value = "";
+                } else {
+                    setHeader("Sorry, something went wrong with your email.");
+                    setBody(result['msg']);
+                    setShowMsg(true);
+                }
+            }).catch(() => {
+                setShowSubmitText(true);
+                setHeader("Sorry, something went wrong with your email.");
+                setBody(`Unable to connect to the server. Please try again later or contact our admin at ${adminPublicEmail}.`);
+                setShowMsg(true);
+            });
+        }
+        catch(err) {
             setShowSubmitText(true);
             setHeader("Sorry, something went wrong with your email.");
             setBody(`Unable to connect to the server. Please try again later or contact our admin at ${adminPublicEmail}.`);
             setShowMsg(true);
-        });
+        }
+        
     }
     
     const [header, setHeader] = useState("");

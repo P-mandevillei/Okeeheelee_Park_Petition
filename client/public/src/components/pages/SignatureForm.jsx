@@ -56,69 +56,76 @@ export default function SignatureForm(props) {
         e?.preventDefault();
         resetWarnings();
 
-        if (!firstName.current.value) {
-            setFirstNameWarning("You should enter your first name above!");
-            return;
-        }
-        if (!lastName.current.value) {
-            setLastNameWarning("You should enter your last name above!");
-            return;
-        }
-        if (!isValidEmail(email.current.value)) {
-            setEmailWarning("Please enter a valid email address.");
-            return;
-        }
-        if (!isValidZipCode(zipCode.current.value)) {
-            setZipCodeWarning("Please enter a valid zip code.");
-            return;
-        }
-        // optional fields
-        if (phone.current.value && !isValidUSPhone(phone.current.value)) {
-            setPhoneWarning("Please enter a valid phone number in the format xxxxxxxxxx");
-            return;
-        }
-
-        const token = await executeRecaptcha('submit');
-        const data = {
-            "firstName": firstName.current.value,
-            "lastName": lastName.current.value,
-            "email": email.current.value,
-            "zipCode": zipCode.current.value,
-            "phone": phone.current.value?? "",
-            "address1": address1.current.value?? "",
-            "address2": address2.current.value?? "",
-            "recaptchaToken": token
-        }
-
-        setShowSignText(false);
-
-        fetch(signPath, {
-            method: "POST",
-            headers: {
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify(data)
-        }).then(res => {
-            if (res.status === 200) {
-                resetFields();
-                props.setShowForm(false);
+        try {
+            if (!firstName.current.value) {
+                setFirstNameWarning("You should enter your first name above!");
+                return;
             }
-            return res.json();
-        })
-        .then(result => {
-            setShowSignText(true);
-            if (result.error === true) {
+            if (!lastName.current.value) {
+                setLastNameWarning("You should enter your last name above!");
+                return;
+            }
+            if (!isValidEmail(email.current.value)) {
+                setEmailWarning("Please enter a valid email address.");
+                return;
+            }
+            if (!isValidZipCode(zipCode.current.value)) {
+                setZipCodeWarning("Please enter a valid zip code.");
+                return;
+            }
+            // optional fields
+            if (phone.current.value && !isValidUSPhone(phone.current.value)) {
+                setPhoneWarning("Please enter a valid phone number in the format xxxxxxxxxx");
+                return;
+            }
+
+            const token = await executeRecaptcha('submit');
+            const data = {
+                "firstName": firstName.current.value,
+                "lastName": lastName.current.value,
+                "email": email.current.value,
+                "zipCode": zipCode.current.value,
+                "phone": phone.current.value?? "",
+                "address1": address1.current.value?? "",
+                "address2": address2.current.value?? "",
+                "recaptchaToken": token
+            }
+
+            setShowSignText(false);
+
+            fetch(signPath, {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(data)
+            }).then(res => {
+                if (res.status === 200) {
+                    resetFields();
+                    props.setShowForm(false);
+                }
+                return res.json();
+            })
+            .then(result => {
+                setShowSignText(true);
+                if (result.error === true) {
+                    setMsgHeader("Submission Failed");
+                    setMsgBody(result.msg);
+                    setShowMsg(true);
+                }
+            })
+            .catch(() => {
+                setShowSignText(true);
                 setMsgHeader("Submission Failed");
-                setMsgBody(result.msg);
+                setMsgBody(`Unable to establish a connection to the server. Please try again later or contact our admin at ${adminPublicEmail}.`);
                 setShowMsg(true);
-            }
-        })
-        .catch(() => {
+            });
+        } catch(err) {
             setShowSignText(true);
             setMsgHeader("Submission Failed");
             setMsgBody(`Unable to establish a connection to the server. Please try again later or contact our admin at ${adminPublicEmail}.`);
             setShowMsg(true);
-        });
+        }
 
     }
 
