@@ -1,6 +1,6 @@
 import { useContext, useId, useState } from "react";
 import { Button, Card, Carousel, Col, Container, Form, Row } from "react-bootstrap"
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import hardwood_hammock from "../../assets/tinified/1-1-hardwood.webp";
 import pine_flatwoods from "../../assets/tinified/1-1-pine.webp";
@@ -14,38 +14,84 @@ import background from "../../assets/tinified/4-1-prairie.webp";
 import australian_pine_1 from "../../assets/tinified/1-1-apine1.webp";
 import australian_pine_2 from "../../assets/tinified/1-1-apine2.webp";
 
-import { allFactsPath, proposalPath } from "../../../../../paths/clientPaths";
+import { allFactsPath, proposalPath } from "../../clientPaths";
 import PicAndParagraph from "./PicAndParagraph";
 import Header from "./Header";
+import { LazyMotionBtn, LazyMotionDiv } from "../../suspense/motion";
+import ScreenWidthContext from "../contexts/ScreenWidthContext";
+
+const container = {
+    width: 50,
+    height: 25,
+    backgroundColor: "#A5D6A7",
+    borderColor: 'rgba(0,0,0,0)',
+    borderRadius: 50,
+    cursor: "pointer",
+    display: "flex",
+    padding: '5%',
+    alignItems: 'center',
+    position: 'relative'
+}
+const handle = {
+    height: '95%',
+    aspectRatio: '1/1',
+    borderRadius: "50%"
+}
 
 export default function Details() {
     const nav = useNavigate();
     const [showProposal, setShowProposal] = useState(false);
-    const [isAutoplayOn, setIsAutoplayOn] = useState('1');
+    const [isAutoplayOn, setIsAutoplayOn] = useState(true);
     const autoplayId = useId();
+
+    const [screenW, setScreenW] = useContext(ScreenWidthContext);
 
     return <div>
         <Header text="Learn More" background={background} alt="A background image of wet prairie" />
 
-        <Card className="pad" style={{border: "rgba(0,0,0,0)"}}>
-            <div className="center" style={{position: 'fixed', right: 0, top: 55, backgroundColor: 'white', fontSize: 13, borderRadius: 5, zIndex: 1}}>
-                <Form.Label htmlFor={autoplayId} style={{margin: 0}}>Autoplay</Form.Label>
-                <Form.Select
-                    id={autoplayId}
-                    className={isAutoplayOn==='1'? "secondaryText":"primaryText"} 
-                    style={{fontSize: 13}} 
-                    value={isAutoplayOn} 
-                    onChange={(e)=>{setIsAutoplayOn(e.target.value)}}
+        <div className="center" style={{position: 'fixed', right: 0, top: 55, fontSize: 13, zIndex: 1}}>
+            <Form.Label htmlFor={autoplayId} style={{margin: 0}} className="primaryText">
+                Autoplay
+            </Form.Label>
+            <button
+                id={autoplayId}
+                style={{
+                    ...container,
+                    justifyContent: "flex-" + (isAutoplayOn? "end" : "start"),
+                }}
+                onClick={() => setIsAutoplayOn(old => !old)}
+            >
+                <p 
+                    style={{
+                        position: 'absolute',
+                        left: isAutoplayOn? '5%': '100%',
+                        top: '50%',
+                        transform: isAutoplayOn? 'translate(0, -50%)': 'translate(-110%, -50%)'
+                    }}
+
                 >
-                    <option className="secondaryText" value={'1'}>On</option>
-                    <option className="primaryText" value={'0'}>Off</option>
-                </Form.Select>
-            </div>
-            <p className='pad center detailHeaders'>
+                    {isAutoplayOn? 'on': 'off'}
+                </p>
+                <LazyMotionDiv
+                    style={handle}
+                    className={isAutoplayOn? 'secondaryColor': 'primaryColor'}
+                    layout
+                    transition={{
+                        type: "spring",
+                        visualDuration: 0.2,
+                        bounce: 0.3,
+                    }}
+                />
+            </button>
+        </div>
+
+        <Card className="pad" style={{border: "rgba(0,0,0,0)"}}>
+
+            <h1 className='center detailHeaders'>
                 Okeeheelee Park South encompasses 960 acres of native south Florida ecological communities.
                 However, current preparations envision its conversion into an RV park using ~$4.1 million from the park's budget. <br />
-            </p>
-
+            </h1>
+            <br/>
             <Container style={{'width': "90%"}}>
                 <PicAndParagraph 
                     paragraph = "The area in question is the most biodiverse section of the park and provides an essential ecosystem for native species."
@@ -92,11 +138,24 @@ export default function Details() {
 
             </Container>
 
-            <p className='pad center detailHeaders'>
+            <p className='center detailHeaders'>
                 We herein propose reallocating these funds toward the restoration of native communities.<br/>
             </p>
             
-            <Button size='lg' onClick={()=>{nav('/contribute')}} className="primaryColor primaryHover hugeBtnEffect">Join Our Coalition</Button>
+            <Link to="/contribute" className="center" style={{width: '70%'}}>
+                <LazyMotionBtn
+                    className="primaryColor primaryHover hugeBtnEffect" 
+                    style={{width: '100%', padding: '0.5em'}}
+                    initial={{scale: 1, opacity: 1}}
+                    whileInView={{ scale: [1, 1.1, 1], opacity: [1, 0.6, 1] }}
+                    transition={{
+                        duration: 1
+                    }}
+                >
+                    Join Our Coalition
+                </LazyMotionBtn>
+            </Link>
+            
             <p className='center notice' style={{'fontSize': '12px'}}>
                 We cannot do this alone. Your voice is greatly appreciated!
             </p>

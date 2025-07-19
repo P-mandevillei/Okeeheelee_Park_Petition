@@ -181,6 +181,9 @@ body {
   color: white !important;
 }
 
+.hugeBtnEffect {
+  border-radius: 4px;
+}
 .hugeBtnEffect:hover {
   border-radius: 50px;
 }

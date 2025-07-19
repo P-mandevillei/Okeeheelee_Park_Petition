@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react"
 import {Button, Card, Container, Form, Row, Col, ToastContainer, Toast} from "react-bootstrap"
 import { isValidEmail, isValidUSPhone, isValidZipCode } from "../auth/SubmissionValidations";
-import { adminPublicEmail, googleRecaptchaClientKey, signPath } from "../../../../../paths/clientPaths";
+import { adminPublicEmail, googleRecaptchaClientKey, signPath } from "../../clientPaths";
 import MessageBox from "./MessageBox";
 import { ClipLoader } from "react-spinners";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";

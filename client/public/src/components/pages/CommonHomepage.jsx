@@ -3,7 +3,7 @@ import { Container, Navbar, Nav, Button, Row, Col, Form, Card } from "react-boot
 import { useId, useState, useEffect, useRef } from "react";
 import ExpandContactContext from "../contexts/ExpandContactContext";
 import { isValidEmail } from "../auth/SubmissionValidations";
-import { adminPublicEmail, emailPath } from "../../../../../paths/clientPaths";
+import { adminPublicEmail, emailPath } from "../../clientPaths";
 import MessageBox from "./MessageBox";
 import { ClipLoader } from "react-spinners";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
@@ -102,7 +102,7 @@ export default function CommonHomepage() {
     </Container>
     </Navbar>
 
-    <div style={{flex: 1}}>
+    <div style={{display: 'flex', flexDirection: 'column', flex: 1}}>
         <ExpandContactContext.Provider value={setexpandContact}>
             <Outlet/>
         </ExpandContactContext.Provider>

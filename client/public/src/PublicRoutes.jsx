@@ -1,10 +1,14 @@
-import { useEffect } from "react"
-import CommonHomepage from "./components/pages/CommonHomepage"
-import Details from "./components/pages/Details"
-import PublicHomepage from "./components/pages/PublicHomepage"
-import PublicLanding from "./components/pages/PublicLanding"
-import Signature from "./components/pages/Signature"
+import { useEffect, Suspense, lazy, useState } from "react"
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"
+
+import CommonHomepage from "./components/pages/CommonHomepage"
+import Loading from "./Loading"
+import ScreenWidthContext from "./components/contexts/ScreenWidthContext"
+
+const Details = lazy( () => import("./components/pages/Details"))
+const PublicHomepage = lazy( () => import("./components/pages/PublicHomepage"))
+const PublicLanding = lazy( () => import("./components/pages/PublicLanding"))
+const Signature = lazy( () => import("./components/pages/Signature"))
 
 function ScrollToTop() {
   const path = useLocation();
@@ -16,17 +20,34 @@ function ScrollToTop() {
 }
 
 function PublicRoutes() {
+  const [screenW, setScreenW] = useState(window.innerWidth);
+  useEffect(() => {
+    const resize = () => {
+      setScreenW(window.innerWidth);
+    };
+    window.addEventListener('resize', resize);
+    return () => {
+      window.removeEventListener('resize', resize);
+    }
+  }, []);
+  
   return <>
   <BrowserRouter>
     <ScrollToTop />
-    <Routes>
-      <Route path='/' element={<CommonHomepage />}>
-        <Route index element={<PublicHomepage />} />
-        <Route path='contribute' element={<Signature />} />
-        <Route path='details' element={<Details />} />
-        <Route path="*" element={<PublicLanding />} />
-      </Route>
-    </Routes>
+    <ScreenWidthContext.Provider value={[screenW, setScreenW]}>
+      
+      <Routes>
+        <Route path='/' element={<CommonHomepage />}>
+        
+          <Route index element={ <Suspense fallback={<Loading />}> <PublicHomepage /> </Suspense> } />
+          <Route path='contribute' element={ <Suspense fallback={<Loading />}> <Signature /> </Suspense>} />
+          <Route path='details' element={<Suspense fallback={<Loading />}> <Details /> </Suspense>} />
+          <Route path="*" element={<Suspense fallback={<Loading />}> <PublicLanding /> </Suspense>} />
+                
+        </Route>
+      </Routes>
+    
+    </ScreenWidthContext.Provider>
   </BrowserRouter>
   </>
 }

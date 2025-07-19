@@ -6,7 +6,7 @@ import { Fireworks } from '@fireworks-js/react';
 import background from "../../assets/tinified/4-1-gopher.webp";
 import { Link } from "react-router-dom";
 import Header from "./Header";
-import { adminPublicEmail, countSignsPath } from "../../../../../paths/clientPaths";
+import { adminPublicEmail, countSignsPath } from "../../clientPaths";
 
 export default function Signature(props) {
     const [showForm, setShowForm] = useState(true);
