@@ -43,7 +43,7 @@ export default function PublicHomepage() {
             border: 'rgba(0,0,0,0)',
             position: 'relative', height: '90vh',
         }}>    
-            <img className='backgroundImgFlex' src={palm} alt="A background image of palm habitats" />
+            <img className='backgroundImgFlex' src={palm} alt="A background image of palm habitats" style={{opacity: 1}} />
             <Container fluid className="frontTextWrapper" >
                 <div className="pad"
                 style={{
