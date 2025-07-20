@@ -9,7 +9,7 @@ if (!admin.apps.length) {
 const db = admin.firestore();
 
 exports.handler = async(event, context) => {
-    if (event.httpMethod !== 'POST') {
+    if (event.httpMethod !== 'GET') {
         return {
             statusCode: 405,
             body: JSON.stringify({
