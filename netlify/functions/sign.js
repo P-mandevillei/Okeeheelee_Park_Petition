@@ -1,6 +1,5 @@
 const admin = require('firebase-admin');
-const { recaptcha_validate, is_valid_email, is_valid_US_phone } = require('./verifications');
-const { isValidZipCode } = require('../../client/public/src/components/auth/SubmissionValidations');
+const { recaptcha_validate, is_valid_email, is_valid_US_phone, is_valid_zip_code } = require('./verifications');
 const SERVICE_ACCOUNT_CONFIG = JSON.parse(process.env.SERVICE_ACCOUNT_CONFIG);
 if (!admin.apps.length) {
     admin.initializeApp({
@@ -39,7 +38,7 @@ exports.handler = async(event, context) => {
                 };
             }
         }
-        if (!data.firstName || !data.lastName || !is_valid_email(data.email) || !isValidZipCode(data.zipCode)
+        if (!data.firstName || !data.lastName || !is_valid_email(data.email) || !is_valid_zip_code(data.zipCode)
             || (data.phone && !is_valid_US_phone(data.phone)) 
         ) {
             return {
