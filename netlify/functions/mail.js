@@ -8,7 +8,7 @@ const emailConfig = {
     MAIL_PORT: 465,
     MAIL_USE_SSL: true,
     MAIL_USE_TLS: false,
-    EMAIL_RECIPIENT: 'chenglin.l@wustl.edu', //process.env.EMAIL_RECIPIENT,
+    EMAIL_RECIPIENT: process.env.EMAIL_RECIPIENT,
     MAIL_MAX_EMAILS: 1000
 };
 const transporter = nodemailer.createTransport({
