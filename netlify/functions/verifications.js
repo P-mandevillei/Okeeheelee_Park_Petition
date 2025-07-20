@@ -1,21 +1,21 @@
-import fetch from "node-fetch";
+const fetch = require("node-fetch");
 
 const GOOGLE_RECAPTCHA_API = process.env.GOOGLE_RECAPTCHA_API;
 const GOOGLE_RECAPTCHA_SERVER_KEY = process.env.GOOGLE_RECAPTCHA_SERVER_KEY;
 
-export function is_valid_email(email){
+function is_valid_email(email){
     return /^[\w!#$%&'*+/=?^_`{}~\.-]+@[\w\-]+(\.[\w\-]+)+$/.test(email);
 }
 
-export function is_valid_zip_code(zipCode) {
+function is_valid_zip_code(zipCode) {
     return /^\d{5}$/.test(zipCode);
 }
 
-export function is_valid_US_phone(phone) {
+function is_valid_US_phone(phone) {
     return /^\d{10}$/.test(phone);
 }
 
-export async function recaptcha_validate(token) {
+async function recaptcha_validate(token) {
     // reCAPTCHA: https://developers.google.com/recaptcha/docs/verify
     const body = {
         'secret': GOOGLE_RECAPTCHA_SERVER_KEY,
@@ -30,4 +30,11 @@ export async function recaptcha_validate(token) {
     });
     const result = await res.json();
     return result.success;
+}
+
+module.exports = {
+    is_valid_email,
+    is_valid_zip_code,
+    is_valid_US_phone,
+    recaptcha_validate
 }
