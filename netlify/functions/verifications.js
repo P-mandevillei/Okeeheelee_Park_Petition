@@ -1,4 +1,4 @@
-const fetch = require("node-fetch");
+import fetch from "node-fetch";
 
 const GOOGLE_RECAPTCHA_API = process.env.GOOGLE_RECAPTCHA_API;
 const GOOGLE_RECAPTCHA_SERVER_KEY = process.env.GOOGLE_RECAPTCHA_SERVER_KEY;
