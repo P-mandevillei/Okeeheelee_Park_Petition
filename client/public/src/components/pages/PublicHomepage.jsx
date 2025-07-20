@@ -5,6 +5,7 @@ import { useContext, useEffect } from "react";
 import ScreenWidthContext from "../contexts/ScreenWidthContext";
 import { LazyMotionBtn, LazyMotionDiv } from "../../suspense/motion";
 import { scale } from "motion/react";
+import { Helmet } from "react-helmet";
 
 export default function PublicHomepage() {
 
@@ -29,6 +30,15 @@ export default function PublicHomepage() {
     const h2Size = (screenW>600? (screenW<680? '3vw':'2.2vw'): '15px');
 
     return <div>
+
+        <Helmet>
+            <title>Protect Okeeheelee</title>
+            <meta 
+                name="description" 
+                content="Protect Okeeheelee Park! Call for the reallocation of ~$4.1M funds toward the natural restoration of Okeeheelee Park South instead of turning it into yet another RV park."
+            />
+        </Helmet>
+
         <Card style={{
             border: 'rgba(0,0,0,0)',
             position: 'relative', height: '90vh',

@@ -7,6 +7,7 @@ import background from "../../assets/tinified/4-1-gopher.webp";
 import { Link } from "react-router-dom";
 import Header from "./Header";
 import { adminPublicEmail, countSignsPath } from "../../clientPaths";
+import { Helmet } from "react-helmet";
 
 export default function Signature(props) {
     const [showForm, setShowForm] = useState(true);
@@ -56,6 +57,15 @@ export default function Signature(props) {
     }, [showForm])
 
     return <>
+
+        <Helmet>
+            <title>Join Coalition - Protect Okeeheelee</title>
+            <meta 
+                name="description" 
+                content="Join our nature coalition by signing your name to protect Okeeheelee Park."
+            />
+        </Helmet>
+
         <Header text="Join Our Coalition!" background={background} alt="A background image of gopher turtle" />
         
         <div className="pad">

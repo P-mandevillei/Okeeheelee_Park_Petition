@@ -1,6 +1,6 @@
-export const serverRoot = "/api"
+export const serverRoot = "https://protect-okeeheelee.netlify.app/.netlify/functions"; //"/api"
 export const signPath = `${serverRoot}/sign`
-export const emailPath = `${serverRoot}/email`
+export const emailPath = `${serverRoot}/mail`
 export const countSignsPath = `${serverRoot}/count_signs`
 
 export const googleRecaptchaClientKey = "6Lddj0YrAAAAAGsPvICEqhRSP7x_waE6o8bNKlA5"

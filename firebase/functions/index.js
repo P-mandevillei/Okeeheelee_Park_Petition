@@ -2,10 +2,17 @@ const functions = require('firebase-functions');
 const {onCall} = require("firebase-functions/v2/https");
 const {setGlobalOptions} = require("firebase-functions");
 const { FieldValue } = require('firebase-admin/firestore'); 
+const { defineString } = require('firebase-functions/params');
 const admin = require('firebase-admin');
 
 admin.initializeApp();
 setGlobalOptions({ maxInstances: 10 });
+
+const GOOGLE_RECAPTCHA_API = defineString('GOOGLE_RECAPTCHA_API');
+const GOOGLE_RECAPTCHA_SERVER_KEY = defineString('GOOGLE_RECAPTCHA_SERVER_KEY');
+const EMAIL_RECIPIENT = defineString('EMAIL_RECIPIENT');
+const EMAIL_USERNAME = defineString('EMAIL_USERNAME');
+const EMAIL_PASSWORD = defineString('EMAIL_PASSWORD');
 
 const collectionName = 'signatures';
 
@@ -24,24 +31,24 @@ function is_valid_US_phone(phone) {
 async function recaptcha_validate(token) {
     // reCAPTCHA: https://developers.google.com/recaptcha/docs/verify
     const body = {
-        'secret': process.env.google_recaptcha_serverKey,
+        'secret': GOOGLE_RECAPTCHA_SERVER_KEY.value(),
         'response': token
     }
-    const res = await fetch(process.env.google_recaptcha_api, {
+    const res = await fetch(GOOGLE_RECAPTCHA_API.value(), {
         headers: {
             'content-type': 'application/json'
         },
         method: 'POST',
-        body: body
+        body: JSON.stringify(body)
     });
     const result = await res.json();
     return result.success;
-}
+} 
 
 exports.addMessageCallable = onCall(async (request) => {
     const data = request.data;
     
-    if (!'recaptchaToken' in Object.keys(data) || !recaptcha_validate(data['recaptchaToken'])) {
+    if (!data.recaptchaToken || !(await recaptcha_validate(data.recaptchaToken))) {
         return {"error": true, "msg": "You smell like a robot! Please try again with reCAPTCHA."};
     }
         
@@ -89,9 +96,3 @@ exports.addMessageCallable = onCall(async (request) => {
         return {'error': true, 'msg': "Unable to connect to the database. Please try again later or contact our admins at {app.config['MAIL_USERNAME']} with the following message: {str(e)}"};
     }
 });
-
-
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });

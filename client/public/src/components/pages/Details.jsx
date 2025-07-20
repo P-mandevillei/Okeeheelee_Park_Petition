@@ -1,6 +1,7 @@
 import { useContext, useId, useState } from "react";
 import { Button, Card, Carousel, Col, Container, Form, Row } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 import hardwood_hammock from "../../assets/tinified/1-1-hardwood.webp";
 import pine_flatwoods from "../../assets/tinified/1-1-pine.webp";
@@ -47,6 +48,14 @@ export default function Details() {
     const [screenW, setScreenW] = useContext(ScreenWidthContext);
 
     return <div>
+        <Helmet>
+            <title>Read More - Protect Okeeheelee</title>
+            <meta 
+                name="description" 
+                content="Read more about our petition on fund redirection to protect Okeeheelee Park."
+            />
+        </Helmet>
+
         <Header text="Learn More" background={background} alt="A background image of wet prairie" />
 
         <div className="center" style={{position: 'fixed', right: 0, top: 55, fontSize: 13, zIndex: 1}}>

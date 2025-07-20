@@ -55,26 +55,32 @@ export default function SignatureForm(props) {
     async function SubmitSignature(e) {
         e?.preventDefault();
         resetWarnings();
+        setShowSignText(false);
 
         try {
             if (!firstName.current.value) {
+                setShowSignText(true);
                 setFirstNameWarning("You should enter your first name above!");
                 return;
             }
             if (!lastName.current.value) {
+                setShowSignText(true);
                 setLastNameWarning("You should enter your last name above!");
                 return;
             }
             if (!isValidEmail(email.current.value)) {
+                setShowSignText(true);
                 setEmailWarning("Please enter a valid email address.");
                 return;
             }
             if (!isValidZipCode(zipCode.current.value)) {
+                setShowSignText(true);
                 setZipCodeWarning("Please enter a valid zip code.");
                 return;
             }
             // optional fields
             if (phone.current.value && !isValidUSPhone(phone.current.value)) {
+                setShowSignText(true);
                 setPhoneWarning("Please enter a valid phone number in the format xxxxxxxxxx");
                 return;
             }
@@ -91,8 +97,7 @@ export default function SignatureForm(props) {
                 "recaptchaToken": token
             }
 
-            setShowSignText(false);
-
+            
             fetch(signPath, {
                 method: "POST",
                 headers: {
@@ -114,16 +119,17 @@ export default function SignatureForm(props) {
                     setShowMsg(true);
                 }
             })
-            .catch(() => {
+            .catch((err) => {
                 setShowSignText(true);
                 setMsgHeader("Submission Failed");
-                setMsgBody(`Unable to establish a connection to the server. Please try again later or contact our admin at ${adminPublicEmail}.`);
+                setMsgBody(`Unable to establish a connection to the server. Please try again later or contact our admin at ${adminPublicEmail} with the message: ${err.message}.`);
                 setShowMsg(true);
             });
+            
         } catch(err) {
             setShowSignText(true);
             setMsgHeader("Submission Failed");
-            setMsgBody(`Unable to establish a connection to the server. Please try again later or contact our admin at ${adminPublicEmail}.`);
+            setMsgBody(`Unable to establish a connection to the server. Please try again later or contact our admin at ${adminPublicEmail} with the message: ${err.message}`);
             setShowMsg(true);
         }
 
