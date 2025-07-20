@@ -3,12 +3,6 @@
   to = "/index.html"
   status = 200
 
-[build]
-  base = "client/public"
-  publish = "dist"
-  functions = "../../netlify/functions"
-  command = "npm run build"
-
 [dev]
   functions = "netlify/functions"
   targetPort = 3000
