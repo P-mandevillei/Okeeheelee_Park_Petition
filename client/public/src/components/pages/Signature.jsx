@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import Header from "./Header";
 import { adminPublicEmail, countSignsPath } from "../../clientPaths";
 import { Helmet } from "react-helmet";
+import { ClipLoader } from "react-spinners";
 
 export default function Signature(props) {
     const [showForm, setShowForm] = useState(true);
@@ -37,12 +38,15 @@ export default function Signature(props) {
         }
     }, [showForm])
 
+    const [collecting, setCollecting] = useState(false);
     const [signatureCount, setSignatureCount] = useState(0);
     useEffect(() => {
         if (!showForm) {
+            setCollecting(true);
             fetch(countSignsPath)
             .then(res => res.json())
             .then(result => {
+                setCollecting(false);
                 if (result?.error === false) {
                     setSignatureCount(result.count);
                 }
@@ -51,6 +55,7 @@ export default function Signature(props) {
                 }
             })
             .catch(()=>{
+                setCollecting(false);
                 setSignatureCount(`Your signature has been recorded, but we failed to connect to our database to retrieve further information at the moment. Please try again later or contact our admins at ${adminPublicEmail}.`);
             })
         }
@@ -89,7 +94,14 @@ export default function Signature(props) {
                             Thank You for Your Support!
                         </h1>
                         <p className="pad center" >
-                            {(typeof signatureCount === 'number')? 
+                        {
+                            collecting? <>
+                                <ClipLoader color="#36d7b7" />
+                                <p style={{ fontSize: '0.7em', color: 'grey', margin: 0 }}> Collecting data... </p>
+                            </>
+                            :
+                            (
+                                typeof signatureCount === 'number'? 
                                 <>
                                     You are the &nbsp;
                                     <span className="notice" style={{'fontSize': '1.2em'}}> {signatureCount}
@@ -99,12 +111,13 @@ export default function Signature(props) {
                                     The planet gets better because of people like you!
                                 </>
                                 : signatureCount
-                            }
+                            )
+                        }
                         </p>
                         <Button style={{width: '80%'}} className="secondaryColor secondaryColorHover hugeBtnEffect" onClick={()=>{setShowForm(true)}}>
                             Sign Another
                         </Button>
-                        <Link className="selectablePrimary" to="/">Home</Link>
+                        <br />
                         <span className="selectablePrimary" onClick={()=>{setExpandContact(true)}}>Contact Us</span>
                     </Card>
                     
