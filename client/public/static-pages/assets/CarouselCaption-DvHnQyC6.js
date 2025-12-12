@@ -1,0 +1,1 @@
+import{r as e,v as p,j as l,G as u}from"./index-jTXmE5tA.js";const c=e.forwardRef(({className:s,bsPrefix:a,as:o="div",...r},t)=>(a=p(a,"carousel-caption"),l.jsx(o,{ref:t,className:u(s,a),...r})));c.displayName="CarouselCaption";export{c as default};

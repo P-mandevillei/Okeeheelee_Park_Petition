@@ -1,1 +1,0 @@
-import{r,j as e,a as s}from"./index-CgwMD6xh.js";function t(a){return e.jsxs(s,{className:"headerCard",children:[e.jsx("img",{className:"backgroundImg",src:a.background,alt:a.alt,loading:"lazy"}),e.jsx("p",{className:"whiteBold frontTextWrapper",style:{fontSize:"4vw"},children:a.text})]})}const n=r.memo(t);export{n as H};

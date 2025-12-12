@@ -1,1 +1,0 @@
-import{r as m,G as l,v as f,j as i}from"./index-CgwMD6xh.js";const u=m.forwardRef(({as:s="div",bsPrefix:a,className:e,...r},t)=>{const o=l(e,f(a,"carousel-item"));return i.jsx(s,{ref:t,...r,className:o})});u.displayName="CarouselItem";export{u as default};
